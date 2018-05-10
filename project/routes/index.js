@@ -8,6 +8,10 @@ var mysql = require('mysql');
 router.get('/index.html', function(req, res, next) {
   res.render('index', { title: 'Final Project - Laptop Store Website - N4QPT' });
 });
+
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Final Project - Laptop Store Website - N4QPT' });
+});
 /* GET dashboard page. */
 router.get('/index1.html', function(req, res, next) {
   res.render('index1', { title: 'dashboard' });
@@ -51,25 +55,25 @@ router.get('/sanpham1.html', function(req, res, next) {
     user: 'root',
     password: '1234',
     database: 'qlbh'
-});
+  });
 
-connection.connect();
+  connection.connect();
 
-connection.query("SELECT * FROM `productcate`", function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', rows);
-   var cate = {value: rows};
-  for (c of cate.value) {
-    console.log(`#${c.CatID} || ${c.CatName}`);
-   }
+  connection.query("SELECT * FROM `productcate`", function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', rows);
+    var cate = {value: rows};
+    for (c of cate.value) {
+      console.log(`#${c.CatID} || ${c.CatName}`);
+    }
     var dulieu = { danhsachsv : rows};
-   dulieu1 = { danhsachsv : rows};
+    dulieu1 = { danhsachsv : rows};
   //var dulieu = { danhsachsv : ["viet","nga","my","an do"]};
 
   res.render('sanpham1', { danhsach: dulieu });
 
   connection.end();
-  });
+});
   //res.render('sanpham1', { title: 'loai san pham' });
 });
 /* GET checkout.html page. */
@@ -80,22 +84,22 @@ router.get('/sanpham2.html', function(req, res, next) {
     user: 'root',
     password: '1234',
     database: 'qlbh'
-});
+  });
 
-connection.connect();
+  connection.connect();
 
-connection.query("SELECT * FROM `nsx`", function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', rows);
-   var cate = {value: rows};
-  for (c of cate.value) {
-    console.log(`#${c.nsxID} || ${c.nsxName}`);
-   }
+  connection.query("SELECT * FROM `nsx`", function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', rows);
+    var cate = {value: rows};
+    for (c of cate.value) {
+      console.log(`#${c.nsxID} || ${c.nsxName}`);
+    }
     var dulieu = { danhsachsv : rows};
 
-  res.render('sanpham2', { danhsach: dulieu });
+    res.render('sanpham2', { danhsach: dulieu });
 
-  connection.end();
+    connection.end();
   });
   //res.render('sanpham2', { title: 'nha san xuat' });
 });
@@ -107,59 +111,59 @@ router.get('/calendar.html', function(req, res, next) {
 /* GET checkout.html page. */
 
 router.get('/test.html', function(req, res, next) {
-  
 
-    var connection = mysql.createConnection({
-        host: 'localhost',
-        port: 3306,
-        user: 'root',
-        password: '1234',
-        database: 'qlbh'
-    });
 
-    connection.connect();
-    
-    connection.query("SELECT * FROM `categories`", function (error, rows) {
-      if (error) throw error;
-      console.log('The solution is: ', rows);
-       var cate = {value: rows};
-      for (c of cate.value) {
-        console.log(`#${c.CatID} || ${c.CatName}`);
-       }
-        var dulieu = { danhsachsv : rows};
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '1234',
+    database: 'qlbh'
+  });
+
+  connection.connect();
+
+  connection.query("SELECT * FROM `categories`", function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', rows);
+    var cate = {value: rows};
+    for (c of cate.value) {
+      console.log(`#${c.CatID} || ${c.CatName}`);
+    }
+    var dulieu = { danhsachsv : rows};
 
     //var dulieu = { danhsachsv : ["viet","nga","my","an do"]};
 
     res.render('test', { danhsach: dulieu });
 
-  connection.end();
-});
+    connection.end();
+  });
 });
 
 /* GET checkout.html page. */
 
 router.post('/them.html', function(req, res, next) {
-  
-      var connection = mysql.createConnection({
-        host: 'localhost',
-        port: 3306,
-        user: 'root',
-        password: '1234',
-        database: 'qlbh'
-    });
 
-    connection.connect();
-    var ten = req.body.ten;
-    var dt = req.body.dt;
-    if( ten != null){
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '1234',
+    database: 'qlbh'
+  });
+
+  connection.connect();
+  var ten = req.body.ten;
+  var dt = req.body.dt;
+  if( ten != null){
     var sql = "INSERT INTO `categories` (`CatID`, `CatName`) VALUES (NULL, '"+ ten +"')";
     connection.query(sql, function (error, rows) {
       if (error) throw error;
       console.log('The solution is: ', ten);
 
 
-    connection.end();
-    
+      connection.end();
+
     });
   }
   res.render('them', {data: 'text'});
@@ -180,21 +184,19 @@ router.get('/xoa/:idxoa', function(req, res, next) {
     user: 'root',
     password: '1234',
     database: 'qlbh'
-});
+  });
 
-connection.connect();
+  connection.connect();
 
-var sql = "DELETE FROM `categories` WHERE `categories`.`CatID` = "+ id +"";
-connection.query(sql, function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', sql);
-
-
-connection.end();
-
-});
+  var sql = "DELETE FROM `categories` WHERE `categories`.`CatID` = "+ id +"";
+  connection.query(sql, function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', sql);
 
 
+    connection.end();
+
+  });
   res.redirect('/test.html');
 });
 
@@ -209,19 +211,19 @@ router.get('/sua/:idsua', function(req, res, next) {
     user: 'root',
     password: '1234',
     database: 'qlbh'
-});
+  });
 
-connection.connect();
-var name = 'Loại 7';
-var sql = "UPDATE `categories` SET `CatName` = '" + name + "' WHERE `categories`.`CatID` = "+ id +"";
-connection.query(sql, function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', sql);
+  connection.connect();
+  var name = 'Loại 7';
+  var sql = "UPDATE `categories` SET `CatName` = '" + name + "' WHERE `categories`.`CatID` = "+ id +"";
+  connection.query(sql, function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', sql);
 
 
-connection.end();
+    connection.end();
 
-});
+  });
 
 
   res.redirect('/test.html');
@@ -241,10 +243,10 @@ router.post('/sanpham1.html', function(req, res, next) {
   var ma = req.body.ma;
   var ten = req.body.ten;
   if( ten != null){
-  var sql = "INSERT INTO `productcate` (`CatID`, `CatName`) VALUES (NULL, '"+ ten +"')";
-  connection.query(sql, function (error, rows) {
-    if (error) throw error;
-    console.log('The solution is: ', ten);
+    var sql = "INSERT INTO `productcate` (`CatID`, `CatName`) VALUES (NULL, '"+ ten +"')";
+    connection.query(sql, function (error, rows) {
+      if (error) throw error;
+      console.log('The solution is: ', ten);
 
     //load update
     
@@ -254,7 +256,7 @@ router.post('/sanpham1.html', function(req, res, next) {
   }
   
   //res.render('sanpham1', { danhsach: dulieu1 });
-res.redirect('/sanpham1.html');
+  res.redirect('/sanpham1.html');
 
 });
 
@@ -270,20 +272,20 @@ router.get('/xoaloaisp/:idxoa', function(req, res, next) {
     user: 'root',
     password: '1234',
     database: 'qlbh'
-});
+  });
 
 
-connection.connect();
+  connection.connect();
 
-var sql = "DELETE FROM `productcate` WHERE `productcate`.`CatID` = "+ id +"";
-connection.query(sql, function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', sql);
+  var sql = "DELETE FROM `productcate` WHERE `productcate`.`CatID` = "+ id +"";
+  connection.query(sql, function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', sql);
 
 
-connection.end();
+    connection.end();
 
-});
+  });
 
 
   res.redirect('/sanpham1.html');
@@ -299,20 +301,20 @@ router.get('/xoansx/:idxoa', function(req, res, next) {
     user: 'root',
     password: '1234',
     database: 'qlbh'
-});
+  });
 
 
-connection.connect();
+  connection.connect();
 
-var sql = "DELETE FROM `nsx` WHERE `nsx`.`nsxID` = "+ id +"";
-connection.query(sql, function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', sql);
+  var sql = "DELETE FROM `nsx` WHERE `nsx`.`nsxID` = "+ id +"";
+  connection.query(sql, function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', sql);
 
 
-connection.end();
+    connection.end();
 
-});
+  });
 
 
   res.redirect('/sanpham2.html');
@@ -331,10 +333,10 @@ router.post('/sanpham2.html', function(req, res, next) {
   var ma = req.body.ma;
   var ten = req.body.ten;
   if( ten != null){
-  var sql = "INSERT INTO `nsx` (`nsxID`, `nsxName`) VALUES (NULL, '"+ ten +"')";
-  connection.query(sql, function (error, rows) {
-    if (error) throw error;
-    console.log('The solution is: ', ten);
+    var sql = "INSERT INTO `nsx` (`nsxID`, `nsxName`) VALUES (NULL, '"+ ten +"')";
+    connection.query(sql, function (error, rows) {
+      if (error) throw error;
+      console.log('The solution is: ', ten);
 
     //load update
     
@@ -343,7 +345,7 @@ router.post('/sanpham2.html', function(req, res, next) {
     
   });
   }
-res.redirect('/sanpham2.html');
+  res.redirect('/sanpham2.html');
 });
 //sua loai sp
 router.get('/sualoaisp/:idsua', function(req, res, next) {
@@ -354,25 +356,25 @@ router.get('/sualoaisp/:idsua', function(req, res, next) {
     user: 'root',
     password: '1234',
     database: 'qlbh'
-});
+  });
 
-connection.connect();
-var sql = "SELECT * FROM `productcate` WHERE `productcate`.`CatID` = "+ id +"";
-connection.query(sql, function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', rows);
-   var cate = {value: rows};
-  for (c of cate.value) {
-    console.log(`#${c.CatID} || ${c.CatName}`);
-   }
+  connection.connect();
+  var sql = "SELECT * FROM `productcate` WHERE `productcate`.`CatID` = "+ id +"";
+  connection.query(sql, function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', rows);
+    var cate = {value: rows};
+    for (c of cate.value) {
+      console.log(`#${c.CatID} || ${c.CatName}`);
+    }
     var dulieu = { danhsachsv : rows};
-   dulieu1 = { danhsachsv : rows};
+    dulieu1 = { danhsachsv : rows};
   //var dulieu = { danhsachsv : ["viet","nga","my","an do"]};
 
   res.render('sua', { danhsach: dulieu });
 
   connection.end();
-  });
+});
   //res.render('sua', { title: 'sua' });
 });
 
@@ -392,11 +394,11 @@ router.post('/sualoaisp/:idsua', function(req, res, next) {
   var name = req.body.ten;
   var sql = "UPDATE `productcate` SET `CatName` = '" + name + "' WHERE `productcate`.`CatID` = "+ id +"";
   connection.query(sql, function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', sql);
+    if (error) throw error;
+    console.log('The solution is: ', sql);
 
 
-  connection.end();
+    connection.end();
 
   });
 
@@ -413,23 +415,23 @@ router.get('/suansx/:idsua', function(req, res, next) {
     user: 'root',
     password: '1234',
     database: 'qlbh'
-});
+  });
 
-connection.connect();
-var sql = "SELECT * FROM `nsx` WHERE `nsx`.`nsxID` = "+ id +"";
-connection.query(sql, function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', rows);
-   var cate = {value: rows};
-  
+  connection.connect();
+  var sql = "SELECT * FROM `nsx` WHERE `nsx`.`nsxID` = "+ id +"";
+  connection.query(sql, function (error, rows) {
+    if (error) throw error;
+    console.log('The solution is: ', rows);
+    var cate = {value: rows};
+
     var dulieu = { danhsachsv : rows};
-   dulieu1 = { danhsachsv : rows};
+    dulieu1 = { danhsachsv : rows};
   //var dulieu = { danhsachsv : ["viet","nga","my","an do"]};
 
   res.render('sua2', { danhsach: dulieu });
 
   connection.end();
-  });
+});
   //res.render('sua', { title: 'sua' });
 });
 
@@ -449,11 +451,11 @@ router.post('/suansx/:idsua', function(req, res, next) {
   var name = req.body.ten;
   var sql = "UPDATE `nsx` SET `nsxName` = '" + name + "' WHERE `nsx`.`nsxID` = "+ id +"";
   connection.query(sql, function (error, rows) {
-  if (error) throw error;
-  console.log('The solution is: ', sql);
+    if (error) throw error;
+    console.log('The solution is: ', sql);
 
 
-  connection.end();
+    connection.end();
 
   });
 
