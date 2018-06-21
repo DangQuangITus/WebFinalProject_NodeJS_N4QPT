@@ -11,20 +11,18 @@
 
 <div class="container">
   <h2>Sửa loại sản phẩm</h2>
-   <% danhsach.danhsachsv.forEach(function (mot){
-    			 %>
-	<form action="/sualoaisp/<%= mot.CatID  %>" method="post">
+	<form action="/sualoaisp/<%= danhsach.CatID  %>" method="post">
     <div class="form-group">
       <label for="ma">Mã loại sản phẩm:</label>
-      <input type="text" class="form-control" id="ma" name="ma" value="<%= mot.CatID %>" disabled>
+      <input type="text" class="form-control" id="ma" name="ma" value="<%= danhsach.CatID %>" disabled>
     </div>
     <div class="form-group">
       <label for="ten">Tên loại sản phẩm:</label>
-      <input type="text" class="form-control" id="ten" name="ten" value="<%= mot.CatName %>">
+      <input type="text" class="form-control" id="ten" name="ten" value="<%= danhsach.CatName %>">
     </div>
     <button type="submit" class="btn btn-success ">Sửa loại sản phẩm</button>
   </form>
-     <% }) %>
+
 </div>
 
 </body>

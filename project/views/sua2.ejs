@@ -11,20 +11,19 @@
 
 <div class="container">
   <h2>Sửa nhà sản xuất</h2>
-   <% danhsach.danhsachsv.forEach(function (mot){
-    			 %>
-	<form action="/suansx/<%= mot.nsxID  %>" method="post">
+ 
+	<form action="/suansx/<%= danhsach.nsxID  %>" method="post">
     <div class="form-group">
       <label for="ma">Mã nhà sản xuất:</label>
-      <input type="text" class="form-control" id="ma" name="ma" value="<%= mot.nsxID %>" disabled>
+      <input type="text" class="form-control" id="ma" name="ma" value="<%= danhsach.nsxID %>" disabled>
     </div>
     <div class="form-group">
       <label for="ten">Tên nhà sản xuất</label>
-      <input type="text" class="form-control" id="ten" name="ten" value="<%= mot.nsxName %>">
+      <input type="text" class="form-control" id="ten" name="ten" value="<%= danhsach.nsxName %>">
     </div>
     <button type="submit" class="btn btn-success ">Sửa nhà sản xuất</button>
   </form>
-     <% }) %>
+ 
 </div>
 
 </body>
