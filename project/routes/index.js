@@ -1,4 +1,6 @@
 var express = require('express');
+//format date
+var moment = require('moment');
 var router = express.Router();
 
 var mysql = require('mysql');
@@ -365,20 +367,30 @@ router.post('/sanpham.html', function(req, res, next) {
     var CatID = req.body.loai;
     var nsxID = req.body.nsx;
     var gia = req.body.gia;
+    var cpu = req.body.cpu;
+    var ram = req.body.ram;
+    var weight = req.body.weight;
+    var harddisk = req.body.harddisk;
+    var dob = moment(req.body.dob, 'D/M/YYYY')
+        .format('YYYY-MM-DD');
+    console.log(" ** *** ngay nhap: " + dob);
     var ngayNhap = "";
-    var date = new Date();
-    //ngayNhap = date.toString();
-    var month = date.getMonth()+1;
-    var thang="";
-    if(month <  10){
-        thang = "0" + month.toString();
-    }else{
-      thang = month;
-    }
-    ngayNhap = date.getFullYear().toString() +"-" + thang +"-"+date.getDate().toString(); 
+    // var date = new Date();
+    // //ngayNhap = date.toString();
+    // var month = date.getMonth()+1;
+    // var thang="";
+    // if(month <  10){
+    //     thang = "0" + month.toString();
+    // }else{
+    //   thang = month;
+    // }
+    // ngayNhap = date.getFullYear().toString() +"-" + thang +"-"+date.getDate().toString(); 
+
+    ngayNhap = dob;
     var xuatxu = req.body.xuatxu;
+    console.log("** *** ngay nhap2: " + ngayNhap);
     console.log("ten: " + ten + " ;CatID: " + CatID + " ;nsxID: " + nsxID + " ;gia: " + gia + " ;ngayNhap: " + ngayNhap + " ;xuatxu: " + xuatxu);
-    productRepo.add(ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap).then(value => {
+    productRepo.add(ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, cpu,ram, weight, harddisk ).then(value => {
       res.redirect('/sanpham.html');
 
     }).catch(err => {
@@ -413,31 +425,40 @@ router.post('/suasp/:idsua', function(req, res, next) {
     var CatID = req.body.loai;
     var nsxID = req.body.nsx;
     var gia = req.body.gia;
+
+    var cpu = req.body.cpu;
+    var ram = req.body.ram;
+    var weight = req.body.weight;
+    var harddisk = req.body.harddisk;
 // console.log(date.toString());
 
-console.log("==========" + req.body.ngayNhap);
-var str = req.body.ngayNhap;
-var temp = str.slice(4, 15);
-console.log("==========" + temp);
-var date = new Date(temp);
-console.log("==========" + date);
-console.log(req.body.ngayNhap);
-    var month = date.getMonth()+1;
-    var thang="";
-    if(month <  10){
-        thang = "0" + month.toString();
-    }else{
-      thang = month;
-    }
-    var ngayNhap = date.getFullYear().toString() +"-" + thang +"-"+date.getDate().toString(); 
-    console.log("ngayNhap: " + ngayNhap);
+var dob = moment(req.body.dob, 'D/M/YYYY')
+        .format('YYYY-MM-DD');
+var ngayNhap = dob;
+//console.log("==========" + req.body.ngayNhap);
+
+// var str = req.body.ngayNhap;
+// var temp = str.slice(4, 15);
+// console.log("==========" + temp);
+// var date = new Date(temp);
+// console.log("==========" + date);
+// console.log(req.body.ngayNhap);
+//     var month = date.getMonth()+1;
+//     var thang="";
+//     if(month <  10){
+//         thang = "0" + month.toString();
+//     }else{
+//       thang = month;
+//     }
+//     var ngayNhap = date.getFullYear().toString() +"-" + thang +"-"+date.getDate().toString(); 
+     console.log("ngayNhap sua: " + ngayNhap);
     var NumSale = req.body.NumSale;
     var NumWatch = req.body.NumWatch;
     var xuatxu = req.body.xuatxu;
   console.log("id can sua la: " + id);
   console.log("ten: " + ten + " ;CatID: " + CatID + " ;nsxID: " + nsxID + " ;gia: " + gia + " ;ngayNhap: " + ngayNhap + " ;xuatxu: " + xuatxu);
 
-  productRepo.update(ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, NumSale, NumWatch, id).then(value => {
+  productRepo.update(ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, NumSale, NumWatch, cpu, ram, weight, harddisk, id).then(value => {
     res.redirect('/sanpham.html');
 
   }).catch(err => {

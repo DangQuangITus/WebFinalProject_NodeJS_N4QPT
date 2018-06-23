@@ -132,6 +132,30 @@
 										<label for="xuatxu">Xuất xứ:</label>
 										<input type="textarea" class="form-control" id="xuatxu" name="xuatxu">
 									</div>
+									<!-- product detail-->
+									<div class="form-group">
+										<label for="cpu">CPU:</label>
+										<input type="textarea" class="form-control" id="cpu" name="cpu">
+									</div>
+									<div class="form-group">
+										<label for="ram">RAM:</label>
+										<input type="textarea" class="form-control" id="ram" name="ram">
+									</div>
+									<div class="form-group">
+										<label for="weight">Cân nặng:</label>
+										<input type="textarea" class="form-control" id="weight" name="weight">
+									</div>
+									<div class="form-group">
+										<label for="harddisk">Đĩa cứng:</label>
+										<input type="textarea" class="form-control" id="harddisk" name="harddisk">
+									</div>
+									<div class="form-group">
+											<label for="txtDOB">Ngày Nhập</label>
+											
+													<input type="text" class="form-control" id="txtDOB" placeholder="dd/mm/yyyy" name="dob">
+											
+									</div>
+									
 									<button type="submit" class="btn btn-default">Thêm sản phẩm</button>
 							</form>
 					  	</div>
@@ -433,6 +457,17 @@
 		</script>
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
+<!-- kiem tra va format date-->
+<script src="/javascripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script type="text/javascript">
+		$('#txtDOB').datepicker({
+			format: 'd/m/yyyy',
+			autoclose: true
+		});
+
+	
+	</script>
+<!-- end-->
 <div class="inner-block">
 
 </div>

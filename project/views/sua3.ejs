@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="/stylesheets/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
 <script src="/javascripts/jquery-2.1.4.min.js"></script>
+
 </head>
 <body>
 
@@ -81,9 +82,58 @@
 										<label for="NumWatch">Số lượt xem:</label>
 										<input type="textarea" class="form-control" id="NumWatch" name="NumWatch" value="<%= danhsach.NumWatch %>">
 									</div>
-                                    <div class="form-group">
+									<%
+										var str = danhsach.ProDateIn;
+										var temp = str.toString().slice(4, 15);
+										var date = new Date(temp);
+										console.log("===ngay nhap sua3===" + date);
+											var month = date.getMonth()+1;
+											var thang="";
+											// if(month <  10){
+											// 	thang = "0" + month.toString();
+											// }else{
+											// thang = month;
+											// }
+											thang = month;
+											var ngayNhap = date.getDate().toString()+"/" + thang +"/"+ date.getFullYear().toString() ; 
+									%>
+                                <!--    <div class="form-group">
 										<label for="ngayNhap">Ngày nhập(không được thay đổi):</label>
-										<input type="textarea" class="form-control" id="ngayNhap" name="ngayNhap" value="<%= danhsach.ProDateIn %>">
+										<input type="textarea" class="form-control" id="ngayNhap" name="ngayNhap" value="<%= ngayNhap %>">
+									</div>   -->
+									<div class="form-group">
+										<label for="txtDOB">Ngày Nhập</label>
+										<input type="text" class="form-control" id="txtDOB" value="<%= ngayNhap %>" name="dob">
+											
+									</div>
+									<!-- kiem tra va format date-->
+									<script src="/javascripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+										<script type="text/javascript">
+											$('#txtDOB').datepicker({
+												format: 'd/m/yyyy',
+												autoclose: true
+
+											});
+
+										
+										</script>
+									<!-- end-->
+										<!-- product detail-->
+									<div class="form-group">
+										<label for="cpu">CPU:</label>
+										<input type="textarea" class="form-control" id="cpu" name="cpu" value="<%= danhsach.CPU %>">
+									</div>
+									<div class="form-group">
+										<label for="ram">RAM:</label>
+										<input type="textarea" class="form-control" id="ram" name="ram" value="<%= danhsach.RAM %>">
+									</div>
+									<div class="form-group">
+										<label for="weight">Cân nặng:</label>
+										<input type="textarea" class="form-control" id="weight" name="weight" value="<%= danhsach.Weight %>">
+									</div>
+									<div class="form-group">
+										<label for="harddisk">Đĩa cứng:</label>
+										<input type="textarea" class="form-control" id="harddisk" name="harddisk" value="<%= danhsach.HardDisk %>">
 									</div>
 									<button type="submit" class="btn btn-success">Sửa sản phẩm</button>
                                     <br/>
