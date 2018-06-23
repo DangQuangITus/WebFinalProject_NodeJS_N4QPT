@@ -129,7 +129,14 @@
 		<div class="row">						
 			<div class="span9">								
 				<ul class="thumbnails listing-products">
-					   
+					<% var i = 0;
+											var masp1;
+											var tensp1;
+											var giasp1;
+											var masp2;
+											var tensp2;
+											var giasp2;
+											%>
 					<% danhsach.danhsachsv.forEach(function (motphantu){		%>
 					<li class="span3">
 						<div class="product-box">
@@ -140,6 +147,22 @@
 							<p class="price"><%= motphantu.ProPrice %></p>
 						</div>
 					</li>    
+					<% 
+									if(i == 2){
+														masp2 = motphantu.ProID;
+														console.log("ma sp 2 =============" + masp2);
+														tensp2 = motphantu.ProName;
+														giasp2 = motphantu.ProPrice;
+									}			
+									if(i == 3){
+											masp1 = motphantu.ProID;
+											console.log("ma sp 1 =============" + masp1);
+											tensp1 = motphantu.ProName;
+											giasp1 = motphantu.ProPrice;
+									}
+									i++;
+									
+									%>
 					<% }) %>
 			<!--		<li class="span3">
 						<div class="product-box">												
@@ -390,10 +413,10 @@
 							<li class="span3">
 								<div class="product-box">
 									<span class="sale_tag"></span>												
-									<a href="product_detail.html"><img alt="" src="/themes/images/cloth/laptop2.jpg"></a><br/>
-									<a href="product_detail.html" class="title">Lenovo IdeaPad 320</a><br/>
-									<a href="#" class="category">7130U/4GB/128GB/Win10</a>
-									<p class="price">10.490.000đ</p>
+														<a href="../product_detail.html/<%= masp1 %>"><img alt="" src="/themes/images/cloth/<%= masp1 %>/lap.png"></a><br/>
+														<a href="../product_detail.html<%= masp1 %>" class="title"><%= tensp1 %></a><br/>
+												<!--	<a href="#" class="category">7130U/4GB/128GB/Win10</a> -->
+														<p class="price"><%= giasp1 %></p>
 								</div>
 							</li>
 						</ul>
@@ -402,10 +425,10 @@
 						<ul class="thumbnails listing-products">
 							<li class="span3">
 								<div class="product-box">												
-									<a href="product_detail.html"><img alt="" src="/themes/images/cloth/laptop4.png"></a><br/>
-									<a href="product_detail.html" class="title">Lenovo IdeaPad 320</a><br/>
-									<a href="#" class="category">6006U/4GB/1TB/Win10</a>
-									<p class="price">9.600.000đ</p>
+									<a href="../product_detail.html/<%= masp2 %>"><img alt="" src="/themes/images/cloth/<%= masp2 %>/lap.png"></a><br/>
+														<a href="../product_detail.html<%= masp2 %>" class="title"><%= tensp2 %></a><br/>
+												<!--	<a href="#" class="category">7130U/4GB/128GB/Win10</a> -->
+														<p class="price"><%= giasp2 %></p>
 								</div>
 							</li>
 						</ul>
