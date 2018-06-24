@@ -244,7 +244,7 @@
 					
 
 					<% page.page_numbers.forEach(function (mot){ %>
-							<% if(mot.isCurPage != null){ %>
+							<% if(mot.isCurPage == true){ %>
 								
 								<li><a href="../products.cate/<%= IDCat %>"><%= mot.value %></a></li>
 							<% }else{ %>
