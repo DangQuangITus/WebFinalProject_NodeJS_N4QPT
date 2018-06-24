@@ -24,16 +24,29 @@ exports.loadAllTopSale = () => {
 }
 
 //lay top 6 sp cùng nsx
-exports.loadAllnsx = (nsxID, num) => {
-    var sql = "SELECT * FROM qlbh.product where nsxID = '"+ nsxID+"' limit "+num+";";
+exports.loadAllnsx = (nsxID, num, offset) => {
+    var sql = "SELECT * FROM qlbh.product where nsxID = '"+ nsxID+"' limit "+num+" offset "+offset+";";
     return db.load(sql);
 }
 
 //lay top 6 sp co cung loai sp
-exports.loadAllcate = (CatID, num) => {
-    var sql = "SELECT * FROM qlbh.product where CatID = '"+ CatID+"' limit "+num+";";
+exports.loadAllcate = (CatID, num, offset) => {
+    var sql = "SELECT * FROM qlbh.product where CatID = '"+ CatID+"' limit "+num+" offset "+offset+";";
     return db.load(sql);
 }
+
+//dem so luong sp theo loai
+exports.countByCat = catId => {
+	var sql = `select count(*) as total from product where CatID = ${catId}`;
+    return db.load(sql);
+}
+
+//dem so luong san pham theo nsx
+exports.countByNsx = nsxID => {
+	var sql = `select count(*) as total from product where nsx = ${nsxID}`;
+    return db.load(sql);
+}
+
 exports.single = (id) => {
     return new Promise((resolve, reject) => {
         var sql = "SELECT * FROM `product` WHERE `product`.`ProID` = "+ id +"";
