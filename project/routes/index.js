@@ -153,13 +153,14 @@ router.get('/products.nsx/:id', function(req, res, next) {
   var cate;
   var nsx;
   var limit = 100;
+  var offset = 0;
     productcateRepo.loadAll().then(rows1 => {
    // console.log(rows);
     cate = { danhsachsv3 : rows1};
     nsxRepo.loadAll().then(rows2 => {
      // console.log(rows);
       nsx = { danhsachsv4 : rows2};
-      productRepo.loadAllnsx(id, limit).then(rows3 => {
+      productRepo.loadAllnsx(id, limit, offset).then(rows3 => {
         var dulieu = { danhsachsv : rows3};
            
              
@@ -176,13 +177,14 @@ router.get('/products.cate/:id', function(req, res, next) {
   var cate;
   var nsx;
   var limit = 100;
+  var offset = 0;
     productcateRepo.loadAll().then(rows1 => {
    // console.log(rows);
     cate = { danhsachsv3 : rows1};
     nsxRepo.loadAll().then(rows2 => {
      // console.log(rows);
       nsx = { danhsachsv4 : rows2};
-      productRepo.loadAllcate(id, limit).then(rows3 => {
+      productRepo.loadAllcate(id, limit, offset).then(rows3 => {
         var dulieu = { danhsachsv : rows3};
            
              
@@ -204,6 +206,7 @@ router.get('/product_detail.html/:id', function(req, res, next) {
     var ds2;
     var sale;
     var limit = 6;
+    var offset = 0;
       productcateRepo.loadAll().then(rows1 => {
      // console.log(rows);
       cate = { danhsachsv1 : rows1};
@@ -213,9 +216,9 @@ router.get('/product_detail.html/:id', function(req, res, next) {
         productRepo.single(id).then(c => {
          // console.log(c);
          console.log("====nsx : " + c.nsxID + " ==== loai: " + c.CatID);
-           productRepo.loadAllnsx(c.nsxID, limit).then(rows3 => {
+           productRepo.loadAllnsx(c.nsxID, limit, offset).then(rows3 => {
             ds1 = { danhsachsv3 : rows3};
-                productRepo.loadAllcate(c.CatID, limit).then(rows4 => {
+                productRepo.loadAllcate(c.CatID, limit, offset).then(rows4 => {
                   ds2 = { danhsachsv4 : rows4};
                   productRepo.loadAllTopSale().then(rows5 => {
                     //console.log(rows5);
