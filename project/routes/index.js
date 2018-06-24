@@ -213,7 +213,7 @@ router.get('/products.cate/:id', function(req, res, next) {
                 isCurPage: i === +page
             });
         }
-        console.log("==========================numbers==============================");
+        console.log("==========================numbers============================");
          console.log(numbers);
         vm = {
             products: pRows,
@@ -225,7 +225,7 @@ router.get('/products.cate/:id', function(req, res, next) {
        });
        
          
-    //     res.render('product/byCat', vm);
+    
 
   //-------------------------------
     productcateRepo.loadAll().then(rows1 => {
