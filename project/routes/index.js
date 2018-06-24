@@ -157,17 +157,64 @@ router.get('/products.nsx/:id', function(req, res, next) {
   var nsx;
   var limit = 100;
   var offset = 0;
+    //-------------------------------
+    var page = req.query.page;
+    if (!page) {
+        page = 1;
+    }
+      console.log("-------------------page -------------------------------" + page);
+    offset = (page - 1) * config.PRODUCTS_PER_PAGE;
+
+    var p1 = productRepo.loadAllnsx(id, limit, offset);
+    var p2 = productRepo.countByNsx(id);
+    var vm;
+    Promise.all([p1, p2]).then(([pRows, countRows]) => {
+      console.log("===========================pRows=============================");
+         console.log(pRows);
+         console.log("==========================countRows==============================");
+         console.log(countRows);
+         console.log("==========================nPages==============================");
+
+        var total = countRows[0].total;
+        var nPages = total / config.PRODUCTS_PER_PAGE;
+        console.log(nPages);
+        if (total % config.PRODUCTS_PER_PAGE > 0) {
+            nPages++;
+        }
+
+        var numbers = [];
+        for (i = 1; i <= nPages; i++) {
+            numbers.push({
+                value: i,
+                isCurPage: i === +page
+            });
+        }
+        console.log("==========================numbers============================");
+         console.log(numbers);
+        vm = {
+            products: pRows,
+            noProducts: pRows.length === 0,
+            page_numbers: numbers
+        };
+        console.log("==========================vm==============================");
+         console.log(vm);
+       });
+       
+         
+    
+
+  //-------------------------------
     productcateRepo.loadAll().then(rows1 => {
    // console.log(rows);
     cate = { danhsachsv3 : rows1};
     nsxRepo.loadAll().then(rows2 => {
      // console.log(rows);
       nsx = { danhsachsv4 : rows2};
-      productRepo.loadAllnsx(id, limit, offset).then(rows3 => {
+      productRepo.loadAllnsx(id, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
         var dulieu = { danhsachsv : rows3};
            
              
-                res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx });
+                res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id });
 
         });
     });
@@ -184,7 +231,7 @@ router.get('/products.cate/:id', function(req, res, next) {
   //-------------------------------
   var page = req.query.page;
     if (!page) {
-        page = 3;
+        page = 1;
     }
       console.log("-------------------page -------------------------------" + page);
     offset = (page - 1) * config.PRODUCTS_PER_PAGE;

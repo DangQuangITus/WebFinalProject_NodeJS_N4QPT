@@ -43,7 +43,7 @@ exports.countByCat = catId => {
 
 //dem so luong san pham theo nsx
 exports.countByNsx = nsxID => {
-	var sql = `select count(*) as total from product where nsx = ${nsxID}`;
+	var sql = `select count(*) as total from product where nsxID = ${nsxID}`;
     return db.load(sql);
 }
 
