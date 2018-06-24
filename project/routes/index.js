@@ -99,7 +99,7 @@ router.get('/products.html/topsale', function(req, res, next) {
           productRepo.loadAllTopDate().then(rows => {
             console.log(rows);
             var dulieu = { danhsachsv2 : rows};
-            res.render('products2', { danhsach: sale, danhsach1: watch, danhsach2: dulieu, danhsach3: cate, danhsach4: nsx });
+            res.render('products2', { danhsach: sale, danhsach1: watch, danhsach2: dulieu, danhsach3: cate, danhsach4: nsx, page: null });
         });
     
         });
@@ -139,7 +139,7 @@ router.get('/products.html/new', function(req, res, next) {
           productRepo.loadAllTopDate().then(rows => {
             console.log(rows);
             var dulieu = { danhsachsv : rows};
-            res.render('products2', { danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx });
+            res.render('products2', { danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx, page: null });
         });
     
         });

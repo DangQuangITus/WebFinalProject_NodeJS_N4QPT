@@ -234,6 +234,9 @@
 					</li> -->
 				</ul>								
 				<hr>
+
+				<!--  phan trang -->
+				<% if(page != null) { %>
 				<div class="pagination pagination-small pagination-centered">
 					<ul>
 						<li><a href="../<%= page.type %>/<%= IDCat %>" aria-label="Previous">
@@ -263,7 +266,7 @@
 					</li>
 				</ul>
 			</div>  
-			<!--  phan trang -->
+			<% } %>
 				
 			<!--  end phan trang -->
 	</div>
