@@ -194,7 +194,8 @@ router.get('/products.nsx/:id', function(req, res, next) {
         vm = {
             products: pRows,
             noProducts: pRows.length === 0,
-            page_numbers: numbers
+            page_numbers: numbers,
+            type: "products.nsx" //loai de tuy chon link page number
         };
         console.log("==========================vm==============================");
          console.log(vm);
@@ -265,7 +266,8 @@ router.get('/products.cate/:id', function(req, res, next) {
         vm = {
             products: pRows,
             noProducts: pRows.length === 0,
-            page_numbers: numbers
+            page_numbers: numbers,
+            type: "products.cate" //loai de tuy chon link page number
         };
         console.log("==========================vm==============================");
          console.log(vm);

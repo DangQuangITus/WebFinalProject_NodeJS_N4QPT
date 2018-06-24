@@ -236,7 +236,7 @@
 				<hr>
 				<div class="pagination pagination-small pagination-centered">
 					<ul>
-						<li><a href="../products.cate/<%= IDCat %>" aria-label="Previous">
+						<li><a href="../<%= page.type %>/<%= IDCat %>" aria-label="Previous">
 							<span aria-hidden="true">&laquo;</span>
 							<span>Prev</span>
 						</a>
@@ -246,17 +246,17 @@
 					<% page.page_numbers.forEach(function (mot){ %>
 							<% if(mot.isCurPage == true){ %>
 								
-								<li><a href="../products.cate/<%= IDCat %>"><%= mot.value %></a></li>
+								<li><a href="../<%= page.type %>/<%= IDCat %>"><%= mot.value %></a></li>
 							<% }else{ %>
 								
-								<li class="active"><a href="../products.cate/<%= IDCat %>?page=<%= mot.value %>"><%= mot.value %></a></li>
+								<li class="active"><a href="../<%= page.type %>/<%= IDCat %>?page=<%= mot.value %>"><%= mot.value %></a></li>
 
 							<% } %> 
 							
 
 						<% }) %>
 
-						<li><a href="../products.cate/<%= IDCat %>" aria-label="Next">
+						<li><a href="../<%= page.type %>/<%= IDCat %>" aria-label="Next">
 							<span>Next</span>
 							<span aria-hidden="true">&raquo;</span>
 						</a>
