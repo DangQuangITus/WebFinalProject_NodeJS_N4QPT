@@ -37,26 +37,21 @@
 										<label for="sdt">Số điện thoại:</label>
 										<input type="textarea" class="form-control" id="sdt" name="sdt" value="<%= danhsach.SDT %>">
 									</div>
+									
+                                    <%
+										var str = danhsach.Date;
+										var temp = str.toString().slice(4, 15);
+										var date = new Date(temp);
+										console.log("===ngay nhap sua3===" + date);
+											var month = date.getMonth()+1;
+											var thang="";
+											thang = month;
+											var ngayNhap = date.getDate().toString()+"/" + thang +"/"+ date.getFullYear().toString() ; 
+									%>
 									<div class="form-group">
-										<label for="ngayNhap">Ngày lập:</label>
-                                        <%
-                                        
-                                            var str = danhsach.Date.toString();
-                                            var temp = str.slice(4,15);
-                                            console.log("==========" + temp);
-                                            var date = new Date(temp);
-                                            console.log("==========" + date);
-                                                    var month = date.getMonth()+1;
-                                                    var thang="";
-                                                    if(month <  10){
-                                                            thang = "0" + month.toString();
-                                                    }else{
-                                                        thang = month;
-                                                    }
-                                                    var ngayNhap = date.getFullYear().toString() +"-" + thang +"-"+date.getDate().toString(); 
-                                                    console.log("ngayNhap: " + ngayNhap);
-                                        %>
-										<input type="textarea" class="form-control" id="ngayNhap" name="ngayNhap" value="<%= ngayNhap %>">
+										<label for="txtDOB">Ngày lập</label>
+										<input type="text" class="form-control" id="txtDOB" value="<%= ngayNhap %>" name="dob">
+											
 									</div>
                                     <div class="form-group">
 										<label for="status">Tình trạng:</label>
@@ -98,6 +93,16 @@
 					  	</div>
  
 </div>
+<!-- kiem tra va format date-->
+<script src="/javascripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script type="text/javascript">
+		$('#txtDOB').datepicker({
+			format: 'd/m/yyyy',
+			autoclose: true
+		});
 
+	
+	</script>
+<!-- end-->
 </body>
 </html>

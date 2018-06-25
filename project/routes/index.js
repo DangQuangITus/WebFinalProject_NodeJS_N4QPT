@@ -363,7 +363,11 @@ router.post('/donhang.html', function(req, res, next) {
   var diaChi = req.body.diaChi;
   var ten = req.body.ten;
   var sdt = req.body.sdt;
-  var ngayNhap = req.body.ngayNhap;
+  var dob = moment(req.body.dob, 'D/M/YYYY')
+        .format('YYYY-MM-DD');
+    console.log(" ** *** ngay nhap: " + dob);
+    var ngayNhap = dob;
+ // var ngayNhap = req.body.ngayNhap;
   var status = req.body.status;
   billRepo.add(ten, diaChi, sdt, ngayNhap, status).then(value => {
     res.redirect('/donhang.html');
@@ -403,7 +407,10 @@ router.post('/suadonhang/:idsua', function(req, res, next) {
   var diaChi = req.body.diaChi;
   var ten = req.body.ten;
   var sdt = req.body.sdt;
-  var ngayNhap = req.body.ngayNhap;
+ // var ngayNhap = req.body.ngayNhap;
+ var dob = moment(req.body.dob, 'D/M/YYYY')
+        .format('YYYY-MM-DD');
+var ngayNhap = dob;
   var status = req.body.status;
 // console.log(date.toString());
 
@@ -1028,6 +1035,8 @@ router.get('/suansx/:idsua', function(req, res, next) {
     });
 });
 
+
+
 router.post('/suansx/:idsua', function(req, res, next) {
   var id = req.params.idsua;
   var name = req.body.ten;
@@ -1062,5 +1071,10 @@ router.post('/suansx/:idsua', function(req, res, next) {
   }).catch(err => {
       res.end('fail');
   });
+});
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.redirect('index.html');
 });
 module.exports = router;
