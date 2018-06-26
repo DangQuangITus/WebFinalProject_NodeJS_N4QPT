@@ -1,5 +1,6 @@
 var express = require('express');
 //format date
+//SHA256 = require('crypto-js/sha256');
 var moment = require('moment');
 var router = express.Router();
 //phan trang
@@ -8,6 +9,7 @@ var config = require('../config/config');
 //
 var mysql = require('mysql');
 //CSDL
+var accountRepo = require('../repos/accountRepo');
 var productcateRepo = require('../repos/productcateRepo'); //loai sp
 var nsxRepo = require('../repos/nsxRepo'); //nsx
 var categoryRepo = require('../repos/categoryRepo');
@@ -967,7 +969,7 @@ router.get('/', function(req, res, next) {
 
 /* controler for login and resgiter */
 
-router.get('/register', (req, res) => {
+/*router.get('/register', (req, res) => {
   res.render('views/register');
 });
 
@@ -988,19 +990,49 @@ router.post('/register', (req, res) => {
   accountRepo.add(user).then(value => {
       res.render('views/register');
   });
+});*/
+
+router.get('/register.html', function(req, res, next) {
+  res.render('register', { title: 'register' });
 });
 
-router.get('/login', (req, res) => {
-  res.render('views/register');
-});
 
-router.post('/login', (req, res) => {
-
+router.post('/login.html', function(req, res, next) {
   console.log("VO ne");
+  console.log(req.body.username);
+  console.log(req.body.password);
   var user = {
       username: req.body.username,
-      password: SHA256(req.body.rawPWD).toString()
+      //password: SHA256(req.body.password).toString()
+      password: req.body.password
   };
+  console.log(user);
+  accountRepo.login(user).then(rows => {
+    if (rows.length > 0) {
+        req.session.isLogged = true;
+        req.session.user = rows[0];
+        req.session.cart = [];
+
+        var url = '/';
+        if (req.query.retUrl) {
+            url = req.query.retUrl;
+        }
+        res.redirect(url);
+
+    } else {
+        console.log("-------------------");
+        var vm = {
+            showError: true,
+            errorMsg: 'Login failed'
+        };
+        res.render('account/login', vm);
+    }
+});
+});
+
+/*router.post('/login', (req, res) => {
+
+  
 
   accountRepo.login(user).then(rows => {
       if (rows.length > 0) {
@@ -1023,7 +1055,6 @@ router.post('/login', (req, res) => {
           res.render('account/login', vm);
       }
   });
-});
-
+});*/
 
 module.exports = router;
