@@ -13,7 +13,7 @@ var productRepo = require('../repos/productRepo');
 var billRepo = require('../repos/billRepo');
 
 router.get("/",function(req,res,next){
-	res.render('products', { title: 'product' });
+	res.send({ message: "Trang không tồn tại" });
 });
 
 
