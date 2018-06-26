@@ -26,9 +26,9 @@ app.use(cookieParser());
 
 var sessionStore = new MySQLStore({
   host: 'localhost',
-  port: 3306,
+  port: 33060,
   user: 'root',
-  password: '1234',
+  password: 'vertrigo',
   database: 'qlbh',
   createDatabaseTable: true,
   schema: {
@@ -50,7 +50,7 @@ app.use(session({
 }));
 //npm ín
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -70,8 +70,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 
 module.exports = app;
