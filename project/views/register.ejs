@@ -133,7 +133,7 @@
 				<div class="row">
 					<div class="span5">					
 						<h4 class="title"><span class="text"><strong>Login</strong> Form</span></h4>
-						<form action="index.html" method="post">
+						<form action="login" method="post">
 							<input type="hidden" name="next" value="/">
 							<fieldset>
 								<div class="control-group">
@@ -153,7 +153,7 @@
 							        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
 							    </label>
 								<div class="control-group">
-									<input tabindex="3" class="btn btn-primary large" type="submit" id="submit" onclick="validate()" value="Sign into your account">
+									<input tabindex="3" class="btn btn-primary large" type="submit" id="submit"  value="Sign into your account">
 									<hr>
 									<p class="reset">Recover your <a tabindex="4" href="#" title="Recover your username or password">username or password</a></p>
 								</div>
@@ -263,12 +263,19 @@
 			});
 		</script>	
 		<script type="text/javascript">
+			var accountRepo = require('../repos/accountRepo');
 			var attempt=3;
 			function validate(){
-				var username=document.getElementById("username").value;
-				var password=document.getElementById("password").value;
-				if(username=="DHP" && password=="DHP")
-				{
+				var user = {
+					 username: document.getElementById("username").value,
+					 password: document.getElementById("password").value
+				};
+				console.log(user);
+				
+				
+				accountRepo.login(user).then(rows => {
+					console.log(row);
+        		if (rows.length > 0) {
 					alert("Login successfully!");
 					window.location="/index.html";
 					return false;
@@ -283,6 +290,7 @@
 					document.getElementById("submit").disabled=true;
 					return false;
 				}
+			});
 			}
 			function validate1(){
 				var username=document.getElementById("username1").value;

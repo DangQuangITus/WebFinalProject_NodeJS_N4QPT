@@ -26,9 +26,9 @@ app.use(cookieParser());
 
 var sessionStore = new MySQLStore({
   host: 'localhost',
-  port: 33060,
+  port: 3306,
   user: 'root',
-  password: 'vertrigo',
+  password: 'ngunguoi',
   database: 'qlbh',
   createDatabaseTable: true,
   schema: {
