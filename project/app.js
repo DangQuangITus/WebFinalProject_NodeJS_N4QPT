@@ -22,13 +22,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+var handleLayoutMDW = require('./middle-wares/handleLayout'),
+    handle404MDW = require('./middle-wares/handle404'),
+    restrict = require('./middle-wares/restrict');
+
 // session
 
 var sessionStore = new MySQLStore({
   host: 'localhost',
-  port: 33060,
+  port: 3306,
   user: 'root',
-  password: 'vertrigo',
+  password: '1234',
   database: 'qlbh',
   createDatabaseTable: true,
   schema: {
@@ -48,9 +52,12 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
+
+    app.use(handleLayoutMDW);
 //npm ín
 
-app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -70,6 +77,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+    app.use(handle404MDW);
 
 
 module.exports = app;

@@ -13,13 +13,56 @@ var nsxRepo = require('../repos/nsxRepo'); //nsx
 var categoryRepo = require('../repos/categoryRepo');
 var productRepo = require('../repos/productRepo');
 var billRepo = require('../repos/billRepo');
+var customerRepo = require('../repos/customerRepo');
+//acc
+var accountRepo = require('../repos/accountRepo');
+var SHA256 = require('crypto-js/sha256');
+//cart
+var cartRepo = require('../repos/cartRepo');
+
 
 /* GET home page. */
+router.get('/index.html', function(req, res, next) {
+  var watch;
+  var sale;
+  
+  
+    //
+    var cate;
+    var nsx;
+    productcateRepo.loadAll().then(rows3 => {
+      console.log(rows3);
+      cate = { danhsachsv3 : rows3};
+      
+      nsxRepo.loadAll().then(rows4 => {
+        console.log(rows4);
+        nsx = { danhsachsv4 : rows4};
 
-router.use("/",require(__dirname + "/homepage"));
-router.use("/index.html",require(__dirname + "/homepage"));
+        productRepo.loadAllTopWatch().then(rows2 => {
+          console.log(rows2);
+          watch = { danhsachsv1 : rows2};
+          
+          productRepo.loadAllTopSale().then(rows1 => {
+            console.log(rows1);
+            sale = { danhsachsv2 : rows1};
+            
+            productRepo.loadAllTopDate().then(rows => {
+              console.log(rows);
+              var dulieu = { danhsachsv : rows};
+              res.render('index', { danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx });
+            });
+            
+          });
+          
+          
+        });
 
+      });
+    });
+  //res.render('index', { title: 'Final Project - Laptop Store Website - N4QPT' });
+});
 /* GET dashboard page. */
+
 
 router.get('/index1.html', function(req, res, next) {
   // categoryRepo.loadAll().then(rows => {
@@ -30,7 +73,47 @@ router.get('/index1.html', function(req, res, next) {
   // });
   res.render('index1', { title: 'dashboard' });
 });
+/* GET product page. */
+router.get('/products.html', function(req, res, next) {
+  res.render('products', { title: 'product' });
+});
+/* ban chay */
+router.get('/products.html/topsale', function(req, res, next) {
+  var watch;
+  var sale;
+  
+  
+    //
+    var cate;
+    var nsx;
+    productcateRepo.loadAll().then(rows3 => {
+      console.log(rows3);
+      cate = { danhsachsv3 : rows3};
+      
+      nsxRepo.loadAll().then(rows4 => {
+        console.log(rows4);
+        nsx = { danhsachsv4 : rows4};
 
+        productRepo.loadAllTopWatch().then(rows2 => {
+          console.log(rows2);
+          watch = { danhsachsv1 : rows2};
+          
+          productRepo.loadAllTopSale().then(rows1 => {
+            console.log(rows1);
+            sale = { danhsachsv : rows1};
+            
+            productRepo.loadAllTopDate().then(rows => {
+              console.log(rows);
+              var dulieu = { danhsachsv2 : rows};
+              res.render('products2', { danhsach: sale, danhsach1: watch, danhsach2: dulieu, danhsach3: cate, danhsach4: nsx, page: null });
+            });
+            
+          });
+          
+          
+        });
+
+        <<<<<<< HEAD
 // /* GET product page. */
 router.use("/products.html", require(__dirname + "/products"));
 
@@ -150,8 +233,52 @@ router.get("/products.html/sanpham", function(req, res, next){
  });
 
 });
-// url = "/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat;
 
+=======
+});
+    });  
+  //res.render('products', { title: 'product' });
+});
+/* moi nhat chay */
+router.get('/products.html/new', function(req, res, next) {
+  var watch;
+  var sale;
+  
+  
+    //
+    var cate;
+    var nsx;
+    productcateRepo.loadAll().then(rows3 => {
+      console.log(rows3);
+      cate = { danhsachsv3 : rows3};
+      
+      nsxRepo.loadAll().then(rows4 => {
+        console.log(rows4);
+        nsx = { danhsachsv4 : rows4};
+
+        productRepo.loadAllTopWatch().then(rows2 => {
+          console.log(rows2);
+          watch = { danhsachsv1 : rows2};
+          
+          productRepo.loadAllTopSale().then(rows1 => {
+            console.log(rows1);
+            sale = { danhsachsv2 : rows1};
+            
+            productRepo.loadAllTopDate().then(rows => {
+              console.log(rows);
+              var dulieu = { danhsachsv : rows};
+              res.render('products2', { danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx, page: null });
+            });
+            
+          });
+          
+          
+        });
+
+      });
+    });  
+  });
+>>>>>>> 455d16733dab3a28dc6fba79dc4b9e070599a27c
 //lay theo nsx
 router.get('/products.nsx/:id', function(req, res, next) {
   var id = req.params.id;
@@ -202,6 +329,9 @@ router.get('/products.nsx/:id', function(req, res, next) {
           console.log("==========================vm==============================");
           console.log(vm);
         });
+    
+    
+    
 
   //-------------------------------
   productcateRepo.loadAll().then(rows1 => {
@@ -212,8 +342,9 @@ router.get('/products.nsx/:id', function(req, res, next) {
      nsx = { danhsachsv4 : rows2};
      productRepo.loadAllnsx(id, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
       var dulieu = { danhsachsv : rows3};
-
-      res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id, title:nsx });
+      
+      
+      res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id });
 
     });
    });
@@ -266,40 +397,59 @@ router.get('/products.cate/:id', function(req, res, next) {
       noProducts: pRows.length === 0,
       page_numbers: numbers,
             type: "products.cate" //loai de tuy chon link page number
+            <<<<<<< HEAD
           };
           console.log("==========================vm==============================");
           console.log(vm);
         });
+  =======
+};
+console.log("==========================vm==============================");
+console.log(vm);
+});
+
+
+
+
+>>>>>>> 455d16733dab3a28dc6fba79dc4b9e070599a27c
   //-------------------------------
   productcateRepo.loadAll().then(rows1 => {
    // console.log(rows);
    cate = { danhsachsv3 : rows1};
    nsxRepo.loadAll().then(rows2 => {
      // console.log(rows);
+     <<<<<<< HEAD
      nsx = { danhsachsv4 : rows2};
      productRepo.loadAllcate(id, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
       var dulieu = { danhsachsv : rows3};
       res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id,title:cate });
+      =======
+      nsx = { danhsachsv4 : rows2};
+      productRepo.loadAllcate(id, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
+        var dulieu = { danhsachsv : rows3};
+        
+        
+        res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id });
+        >>>>>>> 455d16733dab3a28dc6fba79dc4b9e070599a27c
 
+      });
     });
    });
  });
-});
-
-/* GET product_detail page. */
-router.get('/product_detail.html', function(req, res, next) {
- res.render('product_detail', { title: 'product_detail' });
-});
-router.get('/product_detail.html/:id', function(req, res, next) {
-  var id = req.params.id;
-  var cate;
-  var nsx;
-  var ds1;
-  var ds2;
-  var sale;
-  var limit = 6;
-  var offset = 0;
-  productcateRepo.loadAll().then(rows1 => {
+  /* GET product_detail page. */
+  router.get('/product_detail.html', function(req, res, next) {
+   res.render('product_detail', { title: 'product_detail' });
+ });
+  router.get('/product_detail.html/:id', function(req, res, next) {
+    var id = req.params.id;
+    var cate;
+    var nsx;
+    var ds1;
+    var ds2;
+    var sale;
+    var limit = 6;
+    var offset = 0;
+    productcateRepo.loadAll().then(rows1 => {
      // console.log(rows);
      cate = { danhsachsv1 : rows1};
      nsxRepo.loadAll().then(rows2 => {
@@ -315,48 +465,48 @@ router.get('/product_detail.html/:id', function(req, res, next) {
             productRepo.loadAllTopSale().then(rows5 => {
                     //console.log(rows5);
                     sale = { danhsachsv5 : rows5};
-
+                    
                     res.render('product_detail', { danhsach: c, danhsach1: cate, danhsach2: nsx, danhsach3: ds1, danhsach4: ds2, danhsach5: sale });
+                    <<<<<<< HEAD
+                    =======
+
+                    
+                    >>>>>>> 455d16733dab3a28dc6fba79dc4b9e070599a27c
                   });
           });
         });
+         
        });
      });
    });
   //res.render('product_detail', { title: 'product_detail' });
 });
-/* GET cart.html page. */
-router.get('/cart.html', function(req, res, next) {
-  res.render('cart', { title: 'cart' });
-});
-/* GET checkout.html page. */
-router.get('/checkout.html', function(req, res, next) {
-  res.render('checkout', { title: 'checkout' });
-});
 
-/* GET register.html page. */
-router.get('/register.html', function(req, res, next) {
-  res.render('register', { title: 'register' });
-});
-/* GET donhang page. */
-router.get('/donhang.html', function(req, res, next) {
-  billRepo.loadAll().then(rows => {
-    console.log(rows);
-    var dulieu = { danhsachsv : rows};
-    res.render('donhang', { danhsach: dulieu });
+  /* GET checkout.html page. */
+  router.get('/checkout.html', function(req, res, next) {
+    res.render('checkout', { title: 'checkout' });
   });
 
+
+  /* GET donhang page. */
+  router.get('/donhang.html', function(req, res, next) {
+    billRepo.loadAll().then(rows => {
+      console.log(rows);
+      var dulieu = { danhsachsv : rows};
+      res.render('donhang', { danhsach: dulieu });
+    });
+    
   //res.render('donhang', { title: 'donhang' });
 });
 
-router.post('/donhang.html', function(req, res, next) {
-  var diaChi = req.body.diaChi;
-  var ten = req.body.ten;
-  var sdt = req.body.sdt;
-  var dob = moment(req.body.dob, 'D/M/YYYY')
-  .format('YYYY-MM-DD');
-  console.log(" ** *** ngay nhap: " + dob);
-  var ngayNhap = dob;
+  router.post('/donhang.html', function(req, res, next) {
+    var diaChi = req.body.diaChi;
+    var ten = req.body.ten;
+    var sdt = req.body.sdt;
+    var dob = moment(req.body.dob, 'D/M/YYYY')
+    .format('YYYY-MM-DD');
+    console.log(" ** *** ngay nhap: " + dob);
+    var ngayNhap = dob;
  // var ngayNhap = req.body.ngayNhap;
  var status = req.body.status;
  billRepo.add(ten, diaChi, sdt, ngayNhap, status).then(value => {
@@ -432,13 +582,13 @@ billRepo.update(ten, diaChi, sdt, ngayNhap, status, id).then(value => {
 
 /* GET sanpham page. */
 router.get('/sanpham.html', function(req, res, next) {
-
+ 
   var cate;
   var nsx;
   productcateRepo.loadAll().then(rows3 => {
     console.log(rows3);
     cate = { danhsachsv1 : rows3};
-
+    
     nsxRepo.loadAll().then(rows2 => {
       console.log(rows2);
       nsx = { danhsachsv2 : rows2};
@@ -451,7 +601,11 @@ router.get('/sanpham.html', function(req, res, next) {
 
     });
 
+    
   });
+  
+  
+
 
  // res.render('sanpham', { title: 'sanpham' });
 });
@@ -509,6 +663,8 @@ router.get('/suasp/:idsua', function(req, res, next) {
       });
     });
   });
+  
+  
 });
 
 router.post('/suasp/:idsua', function(req, res, next) {
@@ -570,7 +726,7 @@ router.get('/xoasp/:idxoa', function(req, res, next) {
   }).catch(err => {
     res.end('fail');
   });
-
+  
 });
 
 /* GET sanpham1.html page. */
@@ -652,7 +808,7 @@ router.get('/calendar.html', function(req, res, next) {
 /* GET checkout.html page. */
 
 router.get('/test.html', function(req, res, next) {
-
+  
 
   var connection = mysql.createConnection({
     host: 'localhost',
@@ -663,7 +819,7 @@ router.get('/test.html', function(req, res, next) {
   });
 
   connection.connect();
-
+  
   connection.query("SELECT * FROM `categories`", function (error, rows) {
     if (error) throw error;
     console.log('The solution is: ', rows);
@@ -684,7 +840,7 @@ router.get('/test.html', function(req, res, next) {
 /* GET checkout.html page. */
 
 router.post('/them.html', function(req, res, next) {
-
+  
   var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -704,7 +860,7 @@ router.post('/them.html', function(req, res, next) {
 
 
       connection.end();
-
+      
     });
   }
   res.render('them', {data: 'text'});
@@ -774,6 +930,31 @@ router.get('/sua/:idsua', function(req, res, next) {
 
 // ================ xứ lí thêm loại sản phẩm ==================================
 router.post('/sanpham1.html', function(req, res, next) {
+  // var connection = mysql.createConnection({
+  //   host: 'localhost',
+  //   port: 3306,
+  //   user: 'root',
+  //   password: '1234',
+  //   database: 'qlbh'
+  // });
+
+  // connection.connect();
+  // var ma = req.body.ma;
+  // var ten = req.body.ten;
+  // if( ten != null){
+  // var sql = "INSERT INTO `productcate` (`CatID`, `CatName`) VALUES (NULL, '"+ ten +"')";
+  // connection.query(sql, function (error, rows) {
+  //   if (error) throw error;
+  //   console.log('The solution is: ', ten);
+
+  //   //load update
+  
+
+  //   connection.end();
+  // });
+  // }
+  
+  ////res.render('sanpham1', { danhsach: dulieu1 });
 
   var ma = req.body.ma;
   var ten = req.body.ten;
@@ -1037,6 +1218,7 @@ router.get('/', function(req, res, next) {
   res.redirect('index.html');
 });
 
+<<<<<<< HEAD
 router.post("/products.html", function(req, res, next){
 
   var price = req.body.price;
@@ -1046,8 +1228,307 @@ router.post("/products.html", function(req, res, next){
   // url = "/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat;
   res.redirect("/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat);
 
+  =======
+  router.post('/login.html', function(req, res, next) {
+  //console.log("VO ne");
+  console.log(req.body.username);
+  console.log(req.body.password);
+  var user = {
+    username: req.body.username,
+    password: SHA256(req.body.password).toString()
+      //password: req.body.password
+    };
+    console.log(user);
+    console.log("=================req.session.isLogged===================");
+    console.log(req.session.isLogged);
+    console.log("=================req.session.isLogged===================");
+ // console.log(LayoutVM.isLogged);
+ accountRepo.login(user).then(rows => {
+  if (rows.length > 0) {
+    req.session.isLogged = true;
+    req.session.user = rows[0];
+    req.session.cart = [];
+
+    console.log(" =================== req.session.user  ============================");
+    console.log(req.session.user );
+
+    var url = '/';
+    if (req.query.retUrl) {
+      url = req.query.retUrl;
+    }
+    res.redirect(url);
+
+  } else {
+    console.log("-------------------");
+    var vm = {
+      showError: true,
+      errorMsg: 'Đăng nhập thất bại',
+      type: 1
+    };
+    res.render('register', {ds: vm});
+  }
+});
 });
 
+  /* GET register.html page. */
+  router.get('/register.html', function(req, res, next) {
+    var vm = {
+      showError: false,
+      errorMsg: '',
+      type: 0
+    };
+    res.render('register', {ds: vm});
+  //res.render('register', { title: 'register' });
+  >>>>>>> 455d16733dab3a28dc6fba79dc4b9e070599a27c
+});
+
+  router.post('/register.html', (req, res) => {
+
+    var dob = moment(req.body.dob, 'D/M/YYYY')
+    .format('YYYY-MM-DDTHH:mm');
+
+    var user = {
+      username: req.body.username,
+      password: SHA256(req.body.rawPWD).toString(),
+      name: req.body.name,
+      email: req.body.email,
+      dob: dob,
+      permission: 0
+    };
+
+    accountRepo.add(user).then(value => {
+      var vm = {
+        showError: true,
+        errorMsg: 'Đăng kí thành công',
+        type: 2
+      };
+      res.render('register', {ds: vm});
+      
+    });
+  });
+
+
+  /* GET checkout.html page. */
+  router.get('/logout.html', function(req, res, next) {
+    req.session.isLogged = false;
+    req.session.user = null;
+  // req.session.cart = [];
+  res.redirect(req.headers.referer);
+});
+  /* GET checkout.html page. */
+  router.get('/logout1.html', function(req, res, next) {
+    req.session.isLogged = false;
+    req.session.user = null;
+  // req.session.cart = [];
+  res.redirect("/register.html");
+});
+  /*----------Thong Tin Ca Nhan ---------------------*/
+  /* GET register.html page. */
+  router.get('/customer.html', function(req, res, next) {
+    var vm = {
+      showError: false,
+      errorMsg: '',
+      type: 0
+    };
+    res.render('customer', {ds: vm});
+  //res.render('register', { title: 'register' });
+});
+
+  router.post('/customer.html', function(req, res, next) {
+
+
+    var dob = moment(req.body.dob, 'D/M/YYYY')
+    .format('YYYY-MM-DDTHH:mm');
+    console.log("+================= DOB ===================");
+    console.log(dob);
+    console.log("+================= req.body.CusId ===================");
+    console.log(req.body.CusId);
+    //var id = req.params.idsua;
+    var user = {
+      username: req.body.username,
+      password: SHA256(req.body.rawPWD).toString(),
+      name: req.body.name,
+      email: req.body.email,
+      dob: dob,
+      permission: 0,
+      Id: req.body.CusId
+    };
+    
+    customerRepo.update(user).then(value => {
+      var vm = {
+        showError: true,
+        errorMsg: 'Cập nhật thành công',
+        type: 2
+      };
+      accountRepo.login(user).then(rows => {
+        if (rows.length > 0) {
+          req.session.user = rows[0];
+          
+          console.log(" =================== req.session.user ***** ============================");
+          console.log(req.session.user );
+          
+          
+        }
+      });
+      res.render('customer', {ds: vm});
+      
+    });
+  });
+
+
+  router.post('/buy.html', function(req, res, next) {
+
+
+    var dob = moment(req.body.dob, 'D/M/YYYY')
+    .format('YYYY-MM-DDTHH:mm');
+    console.log("+================= DOB ===================");
+    console.log(dob);
+    console.log("+================= req.body.CusId ===================");
+    console.log(req.body.CusId);
+      //var id = req.params.idsua;
+      var user = {
+        username: req.body.username,
+        password: SHA256(req.body.rawPWD).toString(),
+        name: req.body.name,
+        email: req.body.email,
+        dob: dob,
+        permission: 0,
+        Id: req.body.CusId
+      };
+      
+      customerRepo.update(user).then(value => {
+        var vm = {
+          showError: true,
+          errorMsg: 'Cập nhật thành công',
+          type: 2
+        };
+        accountRepo.login(user).then(rows => {
+          if (rows.length > 0) {
+            req.session.user = rows[0];
+            
+            console.log(" =================== req.session.user ***** ============================");
+            console.log(req.session.user );
+            
+            
+          }
+        });
+        res.render('customer', {ds: vm});
+        
+      });
+    });
+
+  /* GET cart.html page. */
+  router.get('/cart', function(req, res, next) {
+    
+      //
+      var cate;
+      var nsx;
+      var ds1;
+      var ds2;
+      var sale;
+      var limit = 6;
+      var offset = 0;
+      
+      productcateRepo.loadAll().then(rows1 => {
+        cate = { danhsachsv1 : rows1};
+        nsxRepo.loadAll().then(rows2 => {
+          nsx = { danhsachsv2 : rows2};
+          productRepo.loadAllTopSale().then(rows5 => {
+            sale = { danhsachsv5 : rows5};
+            var arr_p = [];
+            console.log("======================req.session.cart===========================");
+            console.log(req.session.cart);
+            console.log("=================================================");
+            
+            for (var i = 0; i < req.session.cart.length; i++) {
+              var cartItem = req.session.cart[i];
+                           // var p = productRepo.single(cartItem.ProId);
+                           productRepo.single(cartItem.ProId).then(c => {
+                            // console.log("========================= *** c ***  ==========================");
+
+                            // var p = c;
+                            // console.log(c);
+                            arr_p.push(c);
+                            // console.log("========================= *** c ***  ==========================");
+                            //  console.log(c);
+                             //console.log("========================= *** arr_p 11***  ==========================");
+                            // console.log(arr_p);
+                            console.log("=================================================");
+                          });
+                         }
+                         console.log("========================= *** arr_p ***  ==========================");
+                         console.log(arr_p);
+                         console.log("=================================================");
+
+                         var numbers = [];
+                         for (i = 0; i < req.session.cart.length; i++) {
+                             // var cartItem = req.session.cart[i];
+                             // productRepo.single(cartItem.ProId).then(c => {
+                              
+                              numbers.push({
+                                value: i
+                                
+                              });
+                            //   });
+                            
+                          }
+                          console.log("==========================numbers============================");
+                          console.log(numbers);
+                        // var items = [];
+                        // Promise.all(arr_p).then(result => {
+                        //   console.log("==========================result============================");
+                        //   console.log(result);
+                        //     for (var i = arr_p.length - 1; i >= 0; i--) {
+                        //         var pro = arr_p[i][0];
+                        //         var item = {
+                        //             Product: pro,
+                        //             Quantity: req.session.cart[i].Quantity,
+                        //             Amount: pro.ProPrice * req.session.cart[i].Quantity
+                        //         };
+                        //         console.log("========================= *** item 0000000 ***  ==========================");
+                        //      console.log(item);
+                        //         items.push(item);
+                        //     }
+                        productRepo.loadAll().then(rows => {
+                             // console.log(rows);
+                             var dulieu = { danhsachsv : rows};
+                             var vm = {
+                              items: req.session.cart
+                            };
+                            console.log("========================= *** items 11 ***  ==========================");
+                            console.log(vm.items);
+                            res.render('cart', { danhsach: dulieu, danhsach1: cate, danhsach2: nsx,  danhsach5: sale, ds: vm });
+
+                          });
+                        
+                       //   });
+
+                     });
+        });
+});
+  //res.render('cart', { title: 'cart' });
+});
+
+
+
+router.post('/cart/add', (req, res) => {
+  var item = {
+    ProId: req.body.proId,
+    Quantity: +req.body.quantity
+  };
+
+  cartRepo.add(req.session.cart, item);
+  console.log("======================req.session.cart===========================");
+  console.log(req.session.cart);
+  console.log("=========================item  ==========================");
+  console.log(item);
+  res.redirect(req.headers.referer);
+});
+
+router.post('/cart/remove', (req, res) => {
+  cartRepo.remove(req.session.cart, req.body.ProId);
+  res.redirect(req.headers.referer);
+});
+
+
 module.exports = router;
-
-

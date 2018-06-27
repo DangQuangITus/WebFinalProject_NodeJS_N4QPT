@@ -58,10 +58,10 @@
 									<button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><%= layoutVM.curUser.f_Username %>
 									<span class="caret"></span></button>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-									<li><a role="menuitem" tabindex="-1" href="../register.html">Chỉnh sửa thông tin</a></li>
-									<li><a role="menuitem" tabindex="-1" href="../register.html">Xem lịch sử mua hàng</a></li>
-									<li><a role="menuitem" tabindex="-1" href="../logout.html">Thoát</a></li>
-									
+									<li><a role="menuitem" tabindex="-1" href="../customer.html">Chỉnh sửa thông tin</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../customer.html">Xem lịch sử mua hàng</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../logout1.html">Thoát</a></li>
+								
 									</ul>
 								</span>
 							<%
@@ -141,91 +141,31 @@
 			</section>			
 			<br/>
 			<br/>
-				<h4><span>Login or Regsiter</span></h4>
+				
 			</section>			
 			<section class="main-content">				
 				<div class="row">
 					<div class="span5">					
-						<h4 class="title"><span class="text"><strong>Login</strong> Form</span></h4>
-						<form action="/login.html" method="post">
-							<input type="hidden" name="next" value="/">
-							<fieldset>
-								<div class="control-group">
-									<label class="control-label">Tên đăng nhập: </label>
-									<div class="controls">
-										<input type="text" placeholder="Nhập tên đăng nhập" id="username" class="input-xlarge" name="username" required>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">Mật khẩu:</label>
-									<div class="controls">
-
-										<input type="password" placeholder="Nhập mật khẩu" id="password" class="input-xlarge" name="password" required>
-									</div>
-								</div>
-								<label>
-							        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-							    </label>
-								<div class="control-group">
-									<input tabindex="3" class="btn btn-success large" type="submit" id="submit"  value="Đăng nhập">
-									<hr>
-									<p class="reset">Recover your <a tabindex="4" href="#" title="Recover your username or password">username or password</a></p>
-								</div>
-							</fieldset>
-						</form>		
+						<h4 class="title"><span class="text"></h4>
 						
-						<% if(ds.showError == true){ %>
-							<% if(ds.type == 1){ %>	
-							<div class="alert alert-danger">
-								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-								<strong>Thông báo!</strong> <%= ds.errorMsg %>
-							</div>
-							<% } %>	
-						<% } %>		
+						
+						
 
 						
 					</div>
 					<div class="span7">					
-						<h4 class="title"><span class="text"><strong>Register</strong> Form</span></h4>
-		<!--				<form action="index.html" method="post" class="form-stacked">
-							<fieldset>
-								<div class="control-group">
-									<label class="control-label">Username</label>
-									<div class="controls">
-										<input type="text" placeholder="Enter your username" class="input-xlarge"
-										id="username1" name="username" required>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">Email address:</label>
-									<div class="controls">
-										<input type="text" placeholder="Enter your email" class="input-xlarge" id="email1" name="email" required>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">Password:</label>
-									<div class="controls">
-										<input type="password" placeholder="Enter your password" class="input-xlarge" id="password1" name="password" required>
-									</div>
-								</div>							                            
-								<div class="control-group">
-									<p>Now that we know who you are. I'm not a mistake! In a comic, you know how you can tell who the arch-villain's going to be?</p>
-								</div>
-								<hr>
-								<div class="g-recaptcha" data-sitekey="6LfExFUUAAAAAD2ouMMgpoIrl6tZED6yKcqrpa1i"></div>
-								<div class="actions"><input tabindex="9" class="btn btn-primary large" id="submit1" onclick="validate1()" type="submit" value="Create your account"></div>
+						<h4 class="title"><span class="text"><strong>Update</strong> Form</span></h4>
 
-							</fieldset>
-							
-						</form>	 -->
-						<!-- start -->		
 
-						<form action="/register.html" method="POST" class="form-horizontal" role="form" onsubmit="return validate();">
+
+						<form action="/customer.html" method="POST" class="form-horizontal" role="form" onsubmit="return validate();">
 						<br/>
+                             <input id="CusId" name="CusId" type="hidden" value="<%= layoutVM.curUser.f_Id %>">
+
 							<div class="form-group">
 								<label for="txtUsername" >Tên đăng nhập</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" id="txtUsername" placeholder="Tên đăng nhập" name="username" required>
+									<input type="text" class="form-control" id="txtUsername" value="<%= layoutVM.curUser.f_Username %>" name="username" required>
 								</div>
 							</div>
 							<br/>
@@ -246,47 +186,57 @@
 							<div class="form-group">
 								<label for="txtName" >Họ tên</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" id="txtName" placeholder="Họ tên" name="name" required>
+									<input type="text" class="form-control" id="txtName" placeholder="Họ tên" name="name" required value="<%= layoutVM.curUser.f_Name %>">
 								</div>
 							</div>
 							<br/>
 							<div class="form-group">
 								<label for="txtEmail"  >Email</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" id="txtEmail" placeholder="Email" name="email" required>
+									<input type="text" class="form-control" id="txtEmail" placeholder="Email" name="email" required value="<%= layoutVM.curUser.f_Email %>">
 								</div>
 							</div>
 							<br/>
+                            <%
+										var str = layoutVM.curUser.f_DOB;
+										var temp = str.toString().slice(0, 9);
+										var date = new Date(temp);
+										console.log("==========================ngay sinh update===" + layoutVM.curUser.f_DOB);
+                                        console.log("==========================ngay sinh update===" + date);
+											var month = date.getMonth()+1;
+											var thang="";
+											thang = month;
+											var ngayNhap = date.getDate().toString()+"/" + thang +"/"+ date.getFullYear().toString() ; 
+							%>
 							<div class="form-group">
 								<label for="txtDOB" >Ngày sinh</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" id="txtDOB" placeholder="d/m/yyyy" name="dob" required>
+									<input type="text" class="form-control" id="txtDOB" value="<%= ngayNhap %>" name="dob" required>
 								</div>
 							</div>
 							<div class="form-group">
 							<hr>
-								<div class="g-recaptcha" data-sitekey="6LfExFUUAAAAAD2ouMMgpoIrl6tZED6yKcqrpa1i"></div>
 								
-							<hr>
 								<div class="col-sm-10 col-sm-offset-2">
 									<button type="submit" class="btn btn-success">
-										Đăng ký
+										Cập nhật thông tin cá nhân
 									</button>
 								</div>
 							</div>
 						</form>		
-					<% if(ds.showError == true){ %>
+					
+						<!-- end -->		
+					</div>				
+				</div>
+			</section>		
+            <% if(ds.showError == true){ %>
 							<% if(ds.type == 2){ %>
 							<div class="alert alert-success">
 								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 								<strong>Thông báo!</strong> <%= ds.errorMsg %>
 							</div>
 							<% } %>	
-						<% } %>		
-						<!-- end -->		
-					</div>				
-				</div>
-			</section>			
+						<% } %>			
 			<section style="background-color: #857474;" id="footer-bar">
 				<div class="row">
 					<div class="span3">
