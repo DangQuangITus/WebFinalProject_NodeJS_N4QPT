@@ -14,6 +14,7 @@ var categoryRepo = require('../repos/categoryRepo');
 var productRepo = require('../repos/productRepo');
 var billRepo = require('../repos/billRepo');
 var customerRepo = require('../repos/customerRepo');
+var userhistoryRepo = require('../repos/userhistoryRepo');
 //acc
 var accountRepo = require('../repos/accountRepo');
 var SHA256 = require('crypto-js/sha256');
@@ -1197,4 +1198,28 @@ router.post('/customer.html', function(req, res, next) {
 });
 });
 
+/*-----------Get user history page -----------*/
+router.get('/userhistory.html',function(req, res, next) {
+  var dulieu;
+  userhistoryRepo.loadAll().then(rows => {
+
+    console.log(rows);
+      dulieu = { danhsachhistory : rows};
+      res.render('userhistory', { danhsachuserhistory: dulieu});
+    });
+});
+
+
+/* GET userhistory page. */
+/*router.get('/userhistory.html', function(req, res, next) {
+    userhistoryRepo.loadAll().then(rows => {
+
+    console.log(rows);
+    if(rows>0){
+      var dulieu = { danhsachhistory : rows};
+      res.render('userhistory', { danhsachuserhistory: dulieu});
+    }});
+
+ // res.render('sanpham', { title: 'sanpham' });
+});*/
 module.exports = router;
