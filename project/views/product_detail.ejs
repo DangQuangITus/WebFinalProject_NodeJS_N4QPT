@@ -52,9 +52,9 @@
 					<div class="account pull-right">
 						<ul class="user-menu">				
 							<li><a href="#">Tài Khoản</a></li>
-							<li><a href="cart.html"> Giỏ hàng </a></li>
-							<li><a href="checkout.html"> Thanh toán </a></li>					
-							<li><a href="register.html"> Đăng nhập </a></li>	
+							<li><a href="../cart"> Giỏ hàng </a></li>
+							<li><a href="../checkout.html"> Thanh toán </a></li>					
+							<li><a href="../register.html"> Đăng nhập </a></li>	
 							<% if(layoutVM.isLogged == true) { %>
 								<!-- <li><a href="register.html"><%= layoutVM.curUser.f_Username %></a></li> -->
 								<span class="dropdown">
@@ -171,30 +171,35 @@
 									<input type="text" class="span1" placeholder="1">
 									<button class="btn btn-inverse" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;Thêm vào giỏ</button>
 								</form> -->
-								<form class="form-horizontal" id="frmAddItem" method="post" action="">
+								<form class="form-horizontal" id="frmAddItem" method="post" action="/cart/add">
 									<div class="form-group">
 										<div>
 											<div class="input-group" >
 												<input name="proId" type="hidden" value="<%= danhsach.ProID %>">
 												<label>Số Lượng:</label>
-												<input id="txtQ" name="quantity" type="text" class="form-control" placeholder="Slg" value="1">
-												<span class="input-group-btn">
-													<button class="btn btn-primary" >
-														<span class="fas fa-plus-circle"></span>
-													</button>
-												</span>
-											</div>
-											<br/>
-											<br/>
-											<br/>
-											<button class="btn btn-inverse" type="submit"><span class="fas fa-shopping-cart"></span>&nbsp;Thêm vào giỏ</button>
+												<input id="txtq" name="quantity" type="text" class="form-control" placeholder="Slg" value="1">
+												
+													
 
+											</div>
+											
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<button class="btn btn-inverse" type="submit"><span class="fas fa-shopping-cart"></span>&nbsp;Thêm vào giỏ hàng</button>
 										</div>
 									</div>
 								</form>
+								<button class="btn btn-success" onclick="myFunction()" >
+									<span class="fas fa-plus-circle"></span> Tăng số lượng &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</button>
 							</div>
 
-							<%	} %>							
+							<%	} %>			
+							
+							
+							
 						</div>
 						<div class="row">
 							<div class="span9">
@@ -431,7 +436,7 @@
 							<li><a href="../index.html">Trang chủ</a></li>  
 							<li><a href="../about.html">Thông tin</a></li>
 							<li><a href="../contact.html">Liên hệ</a></li>
-							<li><a href="../cart.html">Giỏ hàng</a></li>
+							<li><a href="../cart">Giỏ hàng</a></li>
 							<li><a href="../register.html">Đăng nhập</a></li>							
 						</ul>					
 					</div>
@@ -487,6 +492,12 @@
                     interval: 2500
                 });								
 			});
+		</script>
+
+		<script>
+		function myFunction() {
+			document.getElementById("txtq").value = +document.getElementById("txtq").value + 1;
+		}
 		</script>
     </body>
 </html>

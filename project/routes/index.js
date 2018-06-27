@@ -17,6 +17,9 @@ var customerRepo = require('../repos/customerRepo');
 //acc
 var accountRepo = require('../repos/accountRepo');
 var SHA256 = require('crypto-js/sha256');
+//cart
+var cartRepo = require('../repos/cartRepo');
+
 
 /* GET home page. */
 router.get('/index.html', function(req, res, next) {
@@ -338,10 +341,7 @@ router.get('/product_detail.html/:id', function(req, res, next) {
       });
   //res.render('product_detail', { title: 'product_detail' });
 });
-/* GET cart.html page. */
-router.get('/cart.html', function(req, res, next) {
-  res.render('cart', { title: 'cart' });
-});
+
 /* GET checkout.html page. */
 router.get('/checkout.html', function(req, res, next) {
   res.render('checkout', { title: 'checkout' });
@@ -1222,4 +1222,161 @@ var dob = moment(req.body.dob, 'D/M/YYYY')
       
   });
 });
+
+
+router.post('/buy.html', function(req, res, next) {
+
+
+  var dob = moment(req.body.dob, 'D/M/YYYY')
+        .format('YYYY-MM-DDTHH:mm');
+        console.log("+================= DOB ===================");
+        console.log(dob);
+        console.log("+================= req.body.CusId ===================");
+        console.log(req.body.CusId);
+      //var id = req.params.idsua;
+    var user = {
+        username: req.body.username,
+        password: SHA256(req.body.rawPWD).toString(),
+        name: req.body.name,
+        email: req.body.email,
+        dob: dob,
+        permission: 0,
+        Id: req.body.CusId
+    };
+    
+    customerRepo.update(user).then(value => {
+        var vm = {
+          showError: true,
+          errorMsg: 'Cập nhật thành công',
+          type: 2
+      };
+      accountRepo.login(user).then(rows => {
+        if (rows.length > 0) {
+            req.session.user = rows[0];
+    
+            console.log(" =================== req.session.user ***** ============================");
+            console.log(req.session.user );
+    
+    
+        }
+    });
+      res.render('customer', {ds: vm});
+        
+    });
+  });
+
+  /* GET cart.html page. */
+router.get('/cart', function(req, res, next) {
+  
+      //
+  var cate;
+    var nsx;
+    var ds1;
+    var ds2;
+    var sale;
+    var limit = 6;
+    var offset = 0;
+   
+      productcateRepo.loadAll().then(rows1 => {
+      cate = { danhsachsv1 : rows1};
+      nsxRepo.loadAll().then(rows2 => {
+        nsx = { danhsachsv2 : rows2};
+                  productRepo.loadAllTopSale().then(rows5 => {
+                    sale = { danhsachsv5 : rows5};
+                    var arr_p = [];
+                        console.log("======================req.session.cart===========================");
+                        console.log(req.session.cart);
+                        console.log("=================================================");
+                        
+                        for (var i = 0; i < req.session.cart.length; i++) {
+                            var cartItem = req.session.cart[i];
+                           // var p = productRepo.single(cartItem.ProId);
+                           productRepo.single(cartItem.ProId).then(c => {
+                            // console.log("========================= *** c ***  ==========================");
+
+                            // var p = c;
+                            // console.log(c);
+                            arr_p.push(c);
+                            // console.log("========================= *** c ***  ==========================");
+                            //  console.log(c);
+                             //console.log("========================= *** arr_p 11***  ==========================");
+                            // console.log(arr_p);
+                             console.log("=================================================");
+                           });
+                        }
+                        console.log("========================= *** arr_p ***  ==========================");
+                             console.log(arr_p);
+                             console.log("=================================================");
+
+                             var numbers = [];
+                             for (i = 0; i < req.session.cart.length; i++) {
+                             // var cartItem = req.session.cart[i];
+                             // productRepo.single(cartItem.ProId).then(c => {
+                              
+                                numbers.push({
+                                  value: i
+                                  
+                                 });
+                            //   });
+                                
+                             }
+                             console.log("==========================numbers============================");
+                              console.log(numbers);
+                        // var items = [];
+                        // Promise.all(arr_p).then(result => {
+                        //   console.log("==========================result============================");
+                        //   console.log(result);
+                        //     for (var i = arr_p.length - 1; i >= 0; i--) {
+                        //         var pro = arr_p[i][0];
+                        //         var item = {
+                        //             Product: pro,
+                        //             Quantity: req.session.cart[i].Quantity,
+                        //             Amount: pro.ProPrice * req.session.cart[i].Quantity
+                        //         };
+                        //         console.log("========================= *** item 0000000 ***  ==========================");
+                        //      console.log(item);
+                        //         items.push(item);
+                        //     }
+                        productRepo.loadAll().then(rows => {
+                             // console.log(rows);
+                              var dulieu = { danhsachsv : rows};
+                              var vm = {
+                                items: req.session.cart
+                            };
+                             console.log("========================= *** items 11 ***  ==========================");
+                             console.log(vm.items);
+                            res.render('cart', { danhsach: dulieu, danhsach1: cate, danhsach2: nsx,  danhsach5: sale, ds: vm });
+
+                          });
+                           
+                       //   });
+
+            });
+          });
+      });
+  //res.render('cart', { title: 'cart' });
+});
+
+
+
+router.post('/cart/add', (req, res) => {
+  var item = {
+      ProId: req.body.proId,
+      Quantity: +req.body.quantity
+  };
+
+  cartRepo.add(req.session.cart, item);
+  console.log("======================req.session.cart===========================");
+  console.log(req.session.cart);
+  console.log("=========================item  ==========================");
+  console.log(item);
+  res.redirect(req.headers.referer);
+});
+
+router.post('/cart/remove', (req, res) => {
+  cartRepo.remove(req.session.cart, req.body.ProId);
+  res.redirect(req.headers.referer);
+});
+
+
 module.exports = router;
