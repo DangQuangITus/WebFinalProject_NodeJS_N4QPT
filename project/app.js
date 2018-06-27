@@ -22,6 +22,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+var handleLayoutMDW = require('./middle-wares/handleLayout'),
+    handle404MDW = require('./middle-wares/handle404'),
+    restrict = require('./middle-wares/restrict');
+
 // session
 
 var sessionStore = new MySQLStore({
@@ -48,6 +52,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
+
+    app.use(handleLayoutMDW);
 //npm ín
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -72,6 +79,7 @@ app.use(function(err, req, res, next) {
 });
 
 
+    app.use(handle404MDW);
 
 
 module.exports = app;

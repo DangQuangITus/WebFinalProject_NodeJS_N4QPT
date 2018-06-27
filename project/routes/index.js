@@ -1087,11 +1087,18 @@ router.post('/login.html', function(req, res, next) {
       //password: req.body.password
   };
   console.log(user);
+  console.log("=================req.session.isLogged===================");
+  console.log(req.session.isLogged);
+  console.log("=================req.session.isLogged===================");
+ // console.log(LayoutVM.isLogged);
   accountRepo.login(user).then(rows => {
     if (rows.length > 0) {
         req.session.isLogged = true;
         req.session.user = rows[0];
         req.session.cart = [];
+
+        console.log(" =================== req.session.user  ============================");
+        console.log(req.session.user );
 
         var url = '/';
         if (req.query.retUrl) {
@@ -1146,4 +1153,12 @@ router.post('/register.html', (req, res) => {
       
   });
 });
+
+router.post('/logout.html', (req, res) => {
+  req.session.isLogged = false;
+  req.session.user = null;
+  // req.session.cart = [];
+  res.redirect(req.headers.referer);
+});
+
 module.exports = router;

@@ -1,4 +1,4 @@
-var categoryRepo = require('../repos/categoryRepo');
+var categoryRepo = require('../repos/productcateRepo');
 
 module.exports = (req, res, next) => {
 
@@ -13,6 +13,7 @@ module.exports = (req, res, next) => {
             isLogged: req.session.isLogged,
             curUser: req.session.user
         };
+       // console.log(" =================== res.locals.layoutVM.curUser ============================");
 
         // console.log(res.locals.layoutVM.curUser);
 
