@@ -9,16 +9,16 @@ exports.single = (id) => {
     return new Promise((resolve, reject) => {
        // var sql = `select * from categories where CatId = ${id}`;
        var sql = "SELECT * FROM `productcate` WHERE `productcate`.`CatID` = "+ id +"";
-        db.load(sql).then(rows => {
-            if (rows.length === 0) {
-                resolve(null);
-            } else {
-                resolve(rows[0]);
-            }
-        }).catch(err => {
-            reject(err);
-        });
+       db.load(sql).then(rows => {
+        if (rows.length === 0) {
+            resolve(null);
+        } else {
+            resolve(rows[0]);
+        }
+    }).catch(err => {
+        reject(err);
     });
+});
 }
 
 exports.add = (ten) => {
@@ -36,5 +36,5 @@ exports.delete = (id) => {
 exports.update = (name, id) => {
    // var sql = `update categories set CatName = '${c.CatName}' where CatID = ${c.CatId}`;
    var sql = "UPDATE `productcate` SET `CatName` = '" + name + "' WHERE `productcate`.`CatID` = "+ id +"";
-    return db.save(sql);
+   return db.save(sql);
 }

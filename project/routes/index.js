@@ -32,8 +32,125 @@ router.get('/index1.html', function(req, res, next) {
 });
 
 // /* GET product page. */
-
 router.use("/products.html", require(__dirname + "/products"));
+
+
+// lọc sản phẩm
+router.get("/products.html/sanpham", function(req, res, next){
+  var gia = req.param('price');
+  var sanpham = req.param('sanpham');
+  var sanxuat = req.param('sanxuat');
+
+  var start;
+  var end;
+
+  switch (gia) {
+    case '0':{
+      start = 0;
+      end = 1000000000;
+      break;
+    }
+    case '05':{
+      start = 0;
+      end = 5000000;
+      break;
+    }
+    case '510':{
+      start = 5000000;
+      end = 10000000;
+      break;
+    }
+    case '1015':{
+      start = 10000000;
+      end = 15000000;
+      break;
+    }
+    case '1520':{
+      start = 15000000;
+      end = 20000000;
+      break;
+    }
+
+    case '20up':{
+      start = 20000000;
+      end = 1000000000;
+      break;
+    }
+    default:{
+      break;
+    }
+  }
+
+  console.log("end: " + end);
+  console.log("đã nhận tham số " + gia + " " + sanpham + " " + sanxuat);
+
+  var id = sanxuat;
+  var cate;
+  var nsx;
+  var limit = 100;
+  var offset = 0;
+    //-------------------------------
+    var page = req.query.page;
+    if (!page) {
+      page = 1;
+    }
+    console.log("-------------------page -------------------------------" + page);
+    offset = (page - 1) * config.PRODUCTS_PER_PAGE;
+
+    var p1 = productRepo.loadAllnsx(id, limit, offset);
+    var p2 = productRepo.countByNsx(id);
+    console.log(p1);
+    var vm;
+    Promise.all([p1, p2]).then(([pRows, countRows]) => {
+
+      var total = countRows[0].total;
+      var nPages = total / config.PRODUCTS_PER_PAGE;
+      console.log(nPages);
+      if (total % config.PRODUCTS_PER_PAGE > 0) {
+        nPages++;
+      }
+      console.log("số pages là:" + nPages);
+      var numbers = [];
+      for (i = 1; i <= nPages; i++) {
+        numbers.push({
+          value: i,
+          isCurPage: i === +page
+        });
+      }
+      console.log("==========================numbers============================");
+      console.log(numbers);
+      vm = {
+        products: pRows,
+        noProducts: pRows.length === 0,
+        page_numbers: numbers,
+            type: "products.nsx" //loai de tuy chon link page number
+          };
+          console.log("==========================vm==============================");
+          console.log(vm);
+        });
+
+  //-------------------------------
+  productcateRepo.loadAll().then(rows1 => {
+   // console.log(rows);
+   cate = { danhsachsv3 : rows1};
+   nsxRepo.loadAll().then(rows2 => {
+     // console.log(rows);
+     nsx = { danhsachsv4 : rows2};
+     productRepo.loadAllFullFilter(start, end, sanpham, sanxuat, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
+      var dulieu = { danhsachsv : rows3};
+      console.log(dulieu);
+      if(dulieu.danhsachsv == null){
+        res.send("<h1> không tìm thấy sản phẩm yêu cầu </h1>");
+      }else{
+        res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id, title:nsx });  
+      }
+      
+    });
+   });
+ });
+
+});
+// url = "/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat;
 
 //lay theo nsx
 router.get('/products.nsx/:id', function(req, res, next) {
@@ -153,7 +270,6 @@ router.get('/products.cate/:id', function(req, res, next) {
           console.log("==========================vm==============================");
           console.log(vm);
         });
-
   //-------------------------------
   productcateRepo.loadAll().then(rows1 => {
    // console.log(rows);
@@ -163,7 +279,6 @@ router.get('/products.cate/:id', function(req, res, next) {
      nsx = { danhsachsv4 : rows2};
      productRepo.loadAllcate(id, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
       var dulieu = { danhsachsv : rows3};
-
       res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id,title:cate });
 
     });
@@ -202,7 +317,6 @@ router.get('/product_detail.html/:id', function(req, res, next) {
                     sale = { danhsachsv5 : rows5};
 
                     res.render('product_detail', { danhsach: c, danhsach1: cate, danhsach2: nsx, danhsach3: ds1, danhsach4: ds2, danhsach5: sale });
-
                   });
           });
         });
@@ -636,9 +750,9 @@ router.get('/sua/:idsua', function(req, res, next) {
 
   var connection = mysql.createConnection({
     host: 'localhost',
-    port: 3306,
+    port: 33060,
     user: 'root',
-    password: '1234',
+    password: 'vertrigo',
     database: 'qlbh'
   });
 
@@ -923,11 +1037,15 @@ router.get('/', function(req, res, next) {
   res.redirect('index.html');
 });
 
+router.post("/products.html", function(req, res, next){
 
-router.post("/products2", function(req, res, next){
-  res.send("đã nhấn submit");
-  res.send(req.body.all);
-  res.redirect("index.html");
+  var price = req.body.price;
+  var sanpham = req.body.sanpham;
+  var sanxuat = req.body.sanxuat;
+
+  // url = "/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat;
+  res.redirect("/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat);
+
 });
 
 module.exports = router;

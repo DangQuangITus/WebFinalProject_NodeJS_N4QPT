@@ -78,21 +78,19 @@
 									<li><a href="../products.cate/<%= motphantu.CatID %>"><%= motphantu.CatName %></a></li>		
 									<% }) %>
 								</ul>
-							</li>			
-							<!-- <li><a href="./products.html">Man</a></li>						
-								<li><a href="./products.html">Hangbag</a></li> -->
-								<li><a href="../../products.html/topsale">Bán chạy nhất</a></li>
-								<li><a href="../../products.html/new">Sản phẩm mới</a></li>
-							</ul>
-						</nav>
-					</div>
-				</section>
-				<section  class="homepage-slider" id="home-slider">
-					<div class="flexslider">
-						<ul class="slides">
-							<li>
-								<img src="/themes/images/carousel/slider_1.jpg" alt="anh bia 1" />
-								<div class="intro">
+							</li>		
+							<li><a href="../../products.html/topsale">Bán chạy nhất</a></li>
+							<li><a href="../../products.html/new">Sản phẩm mới</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+			<section  class="homepage-slider" id="home-slider">
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<img src="/themes/images/carousel/slider_1.jpg" alt="anh bia 1" />
+							<div class="intro">
 							<!--<h1>Laptop mua online</h1>
 							<p><span>Giảm thêm đến 1.000.000đ</span></p>
 							<p><span>Áp dụng kèm theo khuyến mãi trả thẳng khác</span></p> -->
@@ -143,7 +141,6 @@
 							<span class="sale_tag"></span>												
 							<a href="../product_detail.html/<%= motphantu.ProID %>"><img alt="" src="/themes/images/cloth/<%= motphantu.ProID %>/lap.png"></a><br/>
 							<a href="../product_detail.html/<%= motphantu.ProID %>" class="title"><%= motphantu.ProName %></a><br/>
-							<!-- <a href="#" class="category">Core i5 - 7200U/4GB/500GB/14 HD</a> -->
 							<p class="price"><%= motphantu.ProPrice %></p>
 						</div>
 					</li>    
@@ -202,157 +199,88 @@
 		<!--  end phan trang -->
 	</div>
 	<div class="span3 col">
-		<form action="/products2" method="post">
-		<div  id="menu-filter">
-			<h3>Mức Giá</h3>
-			<div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox1" type="checkbox" name = "all" class="input-lg">
-					<label for="checkbox1">
-						Tất cả
-					</label>
+		<form action="/products.html" method="post">
+			<div  id="menu-filter">
+				<h3>Mức Giá</h3>
+				<div>
+					<div class="radio radio-primary">
+						<input id="0" type="radio" name="price"  class="input-lg" value="0" checked>
+						<label for="0">
+							Tất cả
+						</label>
+					</div>
+					<div class="radio radio-primary">
+						<input id="05" type="radio" name="price" class="input-lg" value="05">
+						<label for="05">
+							Dưới 5 triệu
+						</label>
+					</div>
+					<div class="radio radio-primary">
+						<input id="510" type="radio" name="price" class="input-lg" value="510">
+						<label for="510">
+							Từ 5 - 10 triệu
+						</label>
+					</div>
+					<div class="radio radio-primary">
+						<input id="1015" type="radio" name="price" class="input-lg" value="1015">
+						<label for="1015">
+							Từ 10 - 15 triệu
+						</label>
+					</div>
+					<div class="radio radio-primary">
+						<input id="1520" type="radio" name="price" class="input-lg" value="1520">
+						<label for="1520">
+							Từ 15 - 20 triệu
+						</label>
+					</div>
+					<div class="radio radio-primary">
+						<input id="20up" type="radio"name="price" class="input-lg" value="20up">
+						<label for="20up">
+							Trên 20 triệu
+						</label>
+					</div>
 				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox2" type="checkbox" class="input-lg">
-					<label for="checkbox2">
-						Dưới 5 triệu
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox3" type="checkbox" class="input-lg">
-					<label for="checkbox3">
-						Từ 5 - 10 triệu
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox4" type="checkbox" class="input-lg">
-					<label for="checkbox4">
-						Từ 10 - 15 triệu
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox5" type="checkbox" class="input-lg">
-					<label for="checkbox5">
-						Từ 15 - 20 triệu
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox6" type="checkbox" class="input-lg">
-					<label for="checkbox6">
-						Trên 20 triệu
-					</label>
-				</div>
-			</div>
-			<h3>Loại Sản Phẩm</h3>
-			<div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox11" type="checkbox" class="input-lg">
-					<label for="checkbox11">
-						Tất cả
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox22" type="checkbox" class="input-lg">
-					<label for="checkbox22">
-						Chơi game
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox33" type="checkbox" class="input-lg">
-					<label for="checkbox33">
-						Học tập - văn phòng
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox44" type="checkbox" class="input-lg">
-					<label for="checkbox44">
-						Đồ họa - kỹ thuật
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox55" type="checkbox" class="input-lg">
-					<label for="checkbox55">
-						Cao cấp - Sang trọng
-					</label>
-				</div>
+				<h3>Loại Sản Phẩm</h3>
+				<div>
+					<div class="radio radio-primary">
+						<input id="0" type="radio" name="sanpham" class="input-lg" value="0" checked>
+						<label for="0">
+							Tất cả
+						</label>
+					</div>
+					<% danhsach3.danhsachsv3.forEach(function (motphantu){	%>
+					<div class="radio radio-primary">
+						<input id="<%=motphantu.CatID%>" type="radio" name="sanpham" value="<%=motphantu.CatID%>" class="input-lg">
+						<label for="<%=motphantu.CatID%>">
+							<%=motphantu.CatName%>
+						</label>
+					</div>
+					<% }) %>			
 
-			</div>
-			<h3>Hãng Sản Xuất</h3>
-			<div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox111" type="checkbox" class="input-lg">
-					<label for="checkbox111">
-						Tất cả
-					</label>
 				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox222" type="checkbox" class="input-lg">
-					<label for="checkbox222">
-						Apple
-					</label>
+				<h3>Hãng Sản Xuất</h3>
+				<div>
+
+					<div class="radio radio-primary">
+						<input id="sanxuat" name="sanxuat" type="radio" class="input-lg" value="0" checked>
+						<label for="sanxuat">
+							Tất cả
+						</label>
+					</div>
+					<% danhsach4.danhsachsv4.forEach(function (motphantu){		%>
+					<div class="radio radio-primary">
+						<input id="<%=motphantu.nsxID%>" type="radio" value="<%=motphantu.nsxID%>" name="sanxuat" class="input-lg">
+						<label for="<%=motphantu.nsxID%>">
+							<%=motphantu.nsxName %>
+						</label>
+					</div>
+					<% }) %>	
+
 				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox333" type="checkbox" class="input-lg">
-					<label for="checkbox333">
-						Dell
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox444" type="checkbox" class="input-lg">
-					<label for="checkbox444">
-						Asus
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox555" type="checkbox" class="input-lg">
-					<label for="checkbox555">
-						HP
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox666" type="checkbox" class="input-lg">
-					<label for="checkbox666">
-						Acer
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox777" type="checkbox" class="input-lg">
-					<label for="checkbox777">
-						Lenovo
-					</label>
-				</div>
-			</div>
-			<h3>Hệ Điều Hành</h3>
-			<div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox8" type="checkbox" class="input-lg">
-					<label for="checkbox8">
-						Tất cả
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox9" type="checkbox" class="input-lg">
-					<label for="checkbox9">
-						Windows
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox10" type="checkbox" class="input-lg">
-					<label for="checkbox10">
-						macOS
-					</label>
-				</div>
-				<div class="checkbox checkbox-primary">
-					<input id="checkbox12" type="checkbox" class="input-lg">
-					<label for="checkbox12">
-						Dos
-					</label>
-				</div>
+				
 			</div>
 			<button class="btn btn-success btn-block" validate="required:true" type="submit" name="submit"  > 
 			Áp Dụng </button>
-
-		</div>
 		</form>
 		<div class="block">
 			<h4 class="title">
@@ -403,11 +331,11 @@
 		<div class="span3">
 			<h4>Điều Hướng</h4>
 			<ul class="nav">
-				<li><a href="./index.html">Trang chủ</a></li>  
-				<li><a href="./about.html">Thông tin</a></li>
-				<li><a href="./contact.html">Liên hệ</a></li>
-				<li><a href="./cart.html">Giỏ hàng</a></li>
-				<li><a href="./register.html">Đăng nhập</a></li>							
+				<li><a href="/index.html">Trang chủ</a></li>  
+				<li><a href="/about.html">Thông tin</a></li>
+				<li><a href="/contact.html">Liên hệ</a></li>
+				<li><a href="/cart.html">Giỏ hàng</a></li>
+				<li><a href="/register.html">Đăng nhập</a></li>							
 			</ul>					
 		</div>
 		<div class="span4">

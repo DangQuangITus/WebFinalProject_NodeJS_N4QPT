@@ -41,7 +41,6 @@ router.get("/", function(req, res, next){
     					var dulieu = { danhsachsv : rows};
     					res.render('index', { danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx, title: "Trang chủ" });
     				});
-
     			});
     		});
     	});
