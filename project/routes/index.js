@@ -13,6 +13,7 @@ var nsxRepo = require('../repos/nsxRepo'); //nsx
 var categoryRepo = require('../repos/categoryRepo');
 var productRepo = require('../repos/productRepo');
 var billRepo = require('../repos/billRepo');
+var customerRepo = require('../repos/customerRepo');
 //acc
 var accountRepo = require('../repos/accountRepo');
 var SHA256 = require('crypto-js/sha256');
@@ -1154,11 +1155,71 @@ router.post('/register.html', (req, res) => {
   });
 });
 
-router.post('/logout.html', (req, res) => {
+
+/* GET checkout.html page. */
+router.get('/logout.html', function(req, res, next) {
   req.session.isLogged = false;
   req.session.user = null;
   // req.session.cart = [];
   res.redirect(req.headers.referer);
 });
+/* GET checkout.html page. */
+router.get('/logout1.html', function(req, res, next) {
+  req.session.isLogged = false;
+  req.session.user = null;
+  // req.session.cart = [];
+  res.redirect("/register.html");
+});
+/*----------Thong Tin Ca Nhan ---------------------*/
+/* GET register.html page. */
+router.get('/customer.html', function(req, res, next) {
+  var vm = {
+    showError: false,
+    errorMsg: '',
+    type: 0
+  };
+  res.render('customer', {ds: vm});
+  //res.render('register', { title: 'register' });
+});
 
+router.post('/customer.html', function(req, res, next) {
+
+
+var dob = moment(req.body.dob, 'D/M/YYYY')
+      .format('YYYY-MM-DDTHH:mm');
+      console.log("+================= DOB ===================");
+      console.log(dob);
+      console.log("+================= req.body.CusId ===================");
+      console.log(req.body.CusId);
+    //var id = req.params.idsua;
+  var user = {
+      username: req.body.username,
+      password: SHA256(req.body.rawPWD).toString(),
+      name: req.body.name,
+      email: req.body.email,
+      dob: dob,
+      permission: 0,
+      Id: req.body.CusId
+  };
+  
+  customerRepo.update(user).then(value => {
+      var vm = {
+        showError: true,
+        errorMsg: 'Cập nhật thành công',
+        type: 2
+    };
+    accountRepo.login(user).then(rows => {
+      if (rows.length > 0) {
+          req.session.user = rows[0];
+  
+          console.log(" =================== req.session.user ***** ============================");
+          console.log(req.session.user );
+  
+  
+      }
+  });
+    res.render('customer', {ds: vm});
+      
+  });
+});
 module.exports = router;

@@ -61,8 +61,8 @@
 									<button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><%= layoutVM.curUser.f_Username %>
 									<span class="caret"></span></button>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-									<li><a role="menuitem" tabindex="-1" href="../register.html">Chỉnh sửa thông tin</a></li>
-									<li><a role="menuitem" tabindex="-1" href="../register.html">Xem lịch sử mua hàng</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../customer.html">Chỉnh sửa thông tin</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../customer.html">Xem lịch sử mua hàng</a></li>
 									<li><a role="menuitem" tabindex="-1" href="../logout.html">Thoát</a></li>
 									
 									</ul>
@@ -161,14 +161,40 @@
 								</address>									
 								<h4><strong>Giá: <%= danhsach.ProPrice %></strong></h4>
 							</div>
+							<% if(layoutVM.isLogged == true) { %>
+								
+						
 							<div class="span5">
-								<form class="form-inline">
+						<!--		<form class="form-inline">
 									<p>&nbsp;</p>
 									<label>SL:</label>
 									<input type="text" class="span1" placeholder="1">
-									<button class="btn btn-inverse" type="submit">Thêm vào giỏ</button>
+									<button class="btn btn-inverse" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;Thêm vào giỏ</button>
+								</form> -->
+								<form class="form-horizontal" id="frmAddItem" method="post" action="">
+									<div class="form-group">
+										<div>
+											<div class="input-group" >
+												<input name="proId" type="hidden" value="<%= danhsach.ProID %>">
+												<label>Số Lượng:</label>
+												<input id="txtQ" name="quantity" type="text" class="form-control" placeholder="Slg" value="1">
+												<span class="input-group-btn">
+													<button class="btn btn-primary" >
+														<span class="fas fa-plus-circle"></span>
+													</button>
+												</span>
+											</div>
+											<br/>
+											<br/>
+											<br/>
+											<button class="btn btn-inverse" type="submit"><span class="fas fa-shopping-cart"></span>&nbsp;Thêm vào giỏ</button>
+
+										</div>
+									</div>
 								</form>
-							</div>							
+							</div>
+
+							<%	} %>							
 						</div>
 						<div class="row">
 							<div class="span9">
