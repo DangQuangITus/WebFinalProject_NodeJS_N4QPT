@@ -675,7 +675,7 @@ router.get('/test.html', function(req, res, next) {
         host: 'localhost',
         port: 3306,
         user: 'root',
-        password: '1234',
+        password: 'ngunguoi',
         database: 'qlbh'
     });
 
@@ -706,7 +706,7 @@ router.post('/them.html', function(req, res, next) {
         host: 'localhost',
         port: 3306,
         user: 'root',
-        password: '1234',
+        password: 'ngunguoi',
         database: 'qlbh'
     });
 
@@ -740,7 +740,7 @@ router.get('/xoa/:idxoa', function(req, res, next) {
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '1234',
+    password: 'ngunguoi',
     database: 'qlbh'
 });
 
@@ -769,7 +769,7 @@ router.get('/sua/:idsua', function(req, res, next) {
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '1234',
+    password: 'ngunguoi',
     database: 'qlbh'
 });
 
