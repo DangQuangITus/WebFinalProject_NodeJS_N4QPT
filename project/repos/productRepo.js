@@ -63,9 +63,9 @@ exports.single = (id) => {
 }
 
 //`CPU`='Intel Core i5-8250U 1.6GHz up to 3.4GHz 6MB', `RAM`='4GB DDR4 2400MHz (Onboard)', `Weight`='1.45kg', `HardDisk`='256GB SSD M.2' WHERE `ProID`='1'
-exports.add = (ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, cpu, ram, weight, hardDisk) => {
+exports.add = (ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, cpu, ram, weight, hardDisk, stock) => {
     //var sql = "INSERT INTO `product` (`ProID`, `ProName`) VALUES (NULL, '"+ ten +"')";
-    var sql = "INSERT INTO `product` (`ProID`, `ProName`, `ProDec`, `CatID`, `nsxID`, `ProPrice`, `ProAddr`, `ProDateIn`, `NumSale`, `NumWatch`, `CPU`, `RAM`, `Weight`, `HardDisk`) VALUES (NULL, '"+ten+"', '"+mota+"', '"+CatID+"', '"+nsxID+"', '"+gia+"', '"+xuatxu+"', '"+ngayNhap+"', '0', '0','"+cpu+"','"+ram+"','"+weight+"','"+hardDisk+"');"
+    var sql = "INSERT INTO `product` (`ProID`, `ProName`, `ProDec`, `CatID`, `nsxID`, `ProPrice`, `ProAddr`, `ProDateIn`, `NumSale`, `NumWatch`, `CPU`, `RAM`, `Weight`, `HardDisk`, `NumStock`) VALUES (NULL, '"+ten+"', '"+mota+"', '"+CatID+"', '"+nsxID+"', '"+gia+"', '"+xuatxu+"', '"+ngayNhap+"', '0', '0','"+cpu+"','"+ram+"','"+weight+"','"+hardDisk+"','"+stock+"');"
     return db.save(sql);
 }
 
@@ -77,10 +77,10 @@ exports.delete = (id) => {
     return db.save(sql);
 }
 
-exports.update = (ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, NumSale, NumWatch, cpu, ram, weight, hardDisk, id) => {
+exports.update = (ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, NumSale, NumWatch, cpu, ram, weight, hardDisk, stock, id) => {
     var sql = "UPDATE `product` SET `ProName`='"+ten+"', `ProDec`='"+mota+"', `CatID`='"+CatID
     +"', `nsxID`='"+nsxID+"', `ProPrice`='"+gia+"', `ProAddr`='"+xuatxu
-    +"', `ProDateIn`='"+ngayNhap+"', `NumSale`='"+NumSale+"', `NumWatch`='"+NumWatch+"', `CPU`='"+cpu+"', `RAM`='"+ram+"', `Weight`='"+weight+"', `HardDisk`='"+hardDisk+"' WHERE `ProID`='"+
+    +"', `ProDateIn`='"+ngayNhap+"', `NumSale`='"+NumSale+"', `NumWatch`='"+NumWatch+"', `CPU`='"+cpu+"', `RAM`='"+ram+"', `Weight`='"+weight+"', `HardDisk`='"+hardDisk+"', `NumStock`='"+stock+"' WHERE `ProID`='"+
     id+"'";
 
     return db.save(sql);

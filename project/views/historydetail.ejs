@@ -62,7 +62,7 @@
 									<span class="caret"></span></button>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
 									<li><a role="menuitem" tabindex="-1" href="../customer.html">Chỉnh sửa thông tin</a></li>
-									<li><a role="menuitem" tabindex="-1" href="../customer.html">Xem lịch sử mua hàng</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
 									<li><a role="menuitem" tabindex="-1" href="../logout.html">Thoát</a></li>
 									
 									</ul>
@@ -110,7 +110,7 @@
 			<section class="header_text sub">
 				<img class="pageBanner" src="/themes/images/baner.jpg" alt="New products" >
 				<br/>
-				<h4><span>Shopping Cart</span></h4>
+				<h4><span>Lịch sử mua hàng</span></h4>
 			</section>
 			<section class="main-content">				
 				<div class="row">						
@@ -122,8 +122,10 @@
 							<div class="span9">
 														 
 								<div class="tab-content">
-									<h4 class="title"><span class="text"><strong>Giỏ Hàng</strong> Của Bạn </span></h4>
-						<table class="table table-striped">
+				<h4 class="title"><span class="text"><strong>Giỏ Hàng</strong> Của Bạn </span></h4>
+						
+					<!--	<h4> Thanh toán </h4> -->
+                    <table class="table table-striped">
 							<thead>
 								<tr>
 									<th>Hình ảnh</th>
@@ -133,25 +135,23 @@
 								</tr>
 							</thead>
 							<tbody>
-								
-								<% var total = 0;%>
-								<% for(i=0;i<ds.items.length; i++) {		%>
+                            <% var total = 0;%>
+                    <% danhsach0.danhsachsv1.forEach(function (motphantu1){		%>
+                    <% console.log("==+++++++++++++++" + motphantu1.num + " = + " + motphantu1.ProID);%>
 									<% danhsach.danhsachsv.forEach(function (motphantu){		%>
-											<% if(motphantu.ProID == ds.items[i].ProId){ %>
+                                    <% if(motphantu.ProID == motphantu1.ProID){ %>
 											<tr>
 												<td><a href="../product_detail.html/<%= motphantu.ProID %>"><img alt="" src="/themes/images/cloth/<%= motphantu.ProID %>/lap.png"></a></td>
 												<td><%= motphantu.ProName %></td>
-												<td><input type="text" value="<%= ds.items[i].Quantity %>" class="input-mini" ></td>
+												<td><input type="text" value="<%= motphantu1.num %>" class="input-mini" ></td>
 												<td><%= motphantu.ProPrice %></td>
-												<form action="" method="post">
-													<input name="proId<%= motphantu.ProID %>" type="hidden" value="<%= motphantu.ProID %>">
-												</form>
+										
 											</tr>
-											<% 
+                                            <% 
 											var str = motphantu.ProPrice;
 												var x = motphantu.ProPrice.length - 1;
 												var temp = str.toString().slice(0, x);
-												var so = ds.items[i].Quantity;
+												var so = motphantu1.num;
 												console.log("========== money =====" + temp);
 												total = total + so*temp;
 
@@ -159,56 +159,20 @@
 											<% } %>
 										
 									<% }) %>
-									<% } %>
-							
-											  
-								
-								<tr>
+									<% }) %>
+                                <tr>
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
 									<td><strong> Tổng tiền: </strong><strong><span id="total"><%= total%>đ</span></strong></td>
-								</tr>		  
-							</tbody>
+								</tr>	
+                            </tbody>
 						</table>
-						<h4> Thanh toán </h4>
-
 						<hr/>
 										
 							 
 								</div>
-										<form action="/thanhtoan" method="post">
 										
-									<div class="form-group">
-										<label for="ten">Tên khách hàng:</label>
-										<input type="text" class="form-control" id="ten" name="ten"  value="<%= layoutVM.curUser.f_Username %>">
-									</div>
-									<div class="form-group">
-											<label for="diaChi">Địa chỉ khách hàng:</label>
-											<textarea class="form-control" rows="5" cols="3000" id="diaChi" name="diaChi" ></textarea>
-										</div>
-									
-					
-									
-									
-									<div class="form-group">
-										<label for="sdt">Số điện thoại:</label>
-										<input type="textarea" class="form-control" id="sdt" name="sdt">
-									</div>
-					
-									<div class="form-group">
-											<label for="txtDOB">Ngày thanh toán</label>
-											
-													<input type="text" class="form-control" id="txtDOB" placeholder="dd/mm/yyyy" name="dob">
-											
-									</div>
-               			
-							<!--		<div class="form-group">
-										<label for="status">Tình trạng:</label>
-										<input type="text" class="form-control" id="status" name="status"  value="Chưa giao">
-									</div> -->
-									<button type="submit" class="btn btn-success">Thanh toán</button>
-							</form>							
 							</div>		
 
 						
@@ -323,21 +287,6 @@
 			});
 		</script>
 
-		<script>
-		function myFunction() {
-			document.getElementById("total").value = document.getElementById("txtq").value + 1;
-		}
-		</script>
-		<!-- kiem tra va format date-->
-<script src="/javascripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-	<script type="text/javascript">
-		$('#txtDOB').datepicker({
-			format: 'd/m/yyyy',
-			autoclose: true
-		});
 
-	
-	</script>
-<!-- end-->
     </body>
 </html>

@@ -49,17 +49,17 @@
 					<div class="account pull-right">
 						<ul class="user-menu">				
 							<li><a href="#">Tài khoản</a></li>
-							<li><a href="cart.html">Giỏ hàng</a></li>
-							<li><a href="checkout.html">Thanh toán</a></li>					
-							<li><a href="register.html">Đăng nhập</a></li>		
+							<li><a href="../cart">Giỏ hàng</a></li>
+							<li><a href="../checkout.html">Thanh toán</a></li>					
+							<li><a href="../register.html">Đăng nhập</a></li>		
 							<% if(layoutVM.isLogged == true) { %>
 								<!-- <li><a href="register.html"><%= layoutVM.curUser.f_Username %></a></li> -->
 								<span class="dropdown">
 									<button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><%= layoutVM.curUser.f_Username %>
 									<span class="caret"></span></button>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-									<li><a role="menuitem" tabindex="-1" href="../register.html">Chỉnh sửa thông tin</a></li>
-									<li><a role="menuitem" tabindex="-1" href="../register.html">Xem lịch sử mua hàng</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../customer.html">Chỉnh sửa thông tin</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
 									<li><a role="menuitem" tabindex="-1" href="../logout.html">Thoát</a></li>
 									
 									</ul>
@@ -486,7 +486,7 @@
 				<li><a href="./index.html">Trang chủ</a></li>  
 				<li><a href="./about.html">Thông tin</a></li>
 				<li><a href="./contact.html">Liên hệ</a></li>
-				<li><a href="./cart.html">Giỏ hàng</a></li>
+				<li><a href="./cart">Giỏ hàng</a></li>
 				<li><a href="./register.html">Đăng nhập</a></li>							
 			</ul>					
 		</div>

@@ -1,7 +1,6 @@
 var db = require('../fn/db');
 
-// Thiếu cái truy vấn f_DOB = user.birthday trong này.
 exports.update = user => {
-    var sql = `update users set f_Name = '${user.name}', f_Email = '${user.email}'  where f_Username = '${user.username}'`;
-    return db.load(sql);
+   var sql = "UPDATE `users` SET `f_Username`='"+user.username+"', `f_Password`='"+user.password+"', `f_Name`='"+user.name+"', `f_Email`='"+user.email+"', `f_DOB`='"+user.dob+"', `f_sdt`='"+user.sdt+"' WHERE `f_Id`='"+user.Id+"';";
+     return db.save(sql);
 }

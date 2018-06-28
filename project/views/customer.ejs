@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Customer</title>
+		<title>Register</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
@@ -49,9 +49,23 @@
 					<div class="account pull-right">
 						<ul class="user-menu">				
 							<li><a href="#">Tài khoản</a></li>
-							<li><a href="cart.html">Giỏ hàng</a></li>
+							<li><a href="cart">Giỏ hàng</a></li>
 							<li><a href="checkout.html">Thanh toán</a></li>					
 							<li><a href="register.html">Đăng nhập</a></li>		
+							<% if(layoutVM.isLogged == true) { %>
+								<!-- <li><a href="register.html"><%= layoutVM.curUser.f_Username %></a></li> -->
+								<span class="dropdown">
+									<button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><%= layoutVM.curUser.f_Username %>
+									<span class="caret"></span></button>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+									<li><a role="menuitem" tabindex="-1" href="../customer.html">Chỉnh sửa thông tin</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../logout1.html">Thoát</a></li>
+								
+									</ul>
+								</span>
+							<%
+							}%>		
 						</ul>
 					</div>
 				</div>
@@ -127,87 +141,109 @@
 			</section>			
 			<br/>
 			<br/>
+				
 			</section>			
-			<section class="main-content">		
+			<section class="main-content">				
 				<div class="row">
 					<div class="span5">					
-						<h4 class="title"><span class="text"><strong>Thông tin</strong> cá nhân</span></h4>
-						<form action="customer.html" method="post">
-							<input type="hidden" name="next" value="/">
-							<fieldset>
-								<div class="control-group">
-									<label class="control-label">Họ tên</label>
-									<div class="controls">
-										<input type="text" placeholder="Enter your username" id="name" class="input-xlarge" name="name" required>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">Địa chỉ Email</label>
-									<div class="controls">
-										<input type="text" placeholder="Enter your address" id="email" class="input-xlarge" name="email" required>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">Ngày sinh</label>
-									<div class="controls">
-											<input type="datetime" placeholder="Enter your birthday" class="input-xlarge form-control" id="txtDOB"  name="birthday" required>
-									
-									</div>
-								</div>
-								<div class="control-group">
-									<input tabindex="3" class="btn btn-primary large" type="submit" id="submit"  value="Thay đổi thông tin">
-									<hr>
-								</div>
-							</fieldset>
-						</form>				
+						<h4 class="title"><span class="text"></h4>
+						
+						
+						
+
+						
 					</div>
 					<div class="span7">					
-						<h4 class="title"><span class="text"><strong>Lịch sử</strong> mua hàng</span></h4>
-						<form action="newcustomer.html" method="post" class="form-stacked">
-							<fieldset>
-								<div class="control-group">
-									<label class="control-label"><strong>Các sản phẩm đã mua</strong> </label>
+						<h4 class="title"><span class="text"><strong>Update</strong> Form</span></h4>
+
+
+
+						<form action="/customer.html" method="POST" class="form-horizontal" role="form" onsubmit="return validate();">
+						<br/>
+                             <input id="CusId" name="CusId" type="hidden" value="<%= layoutVM.curUser.f_Id %>">
+
+							<div class="form-group">
+								<label for="txtUsername" >Tên đăng nhập</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="txtUsername" value="<%= layoutVM.curUser.f_Username %>" name="username" required>
 								</div>
-								<li class="span3">
-									<div class="product-box">												
-										<a href="product_detail.html"><img alt="" src="themes/images/cloth/laptop1.png"></a><br/>
-										<a href="product_detail.html" class="title">ASUS VivoBook Swift SF315</a><br/>
-										<a href="#" class="category">i5 8250U/4GB/1TB/Win10</a>
-										<p class="price">16.990.000 đ</p>
-									</div>
-								</li>
-								<li class="span3">
-									<div class="product-box">
-										<span class="sale_tag"></span>												
-										<a href="product_detail.html"><img alt="" src="themes/images/cloth/laptop2.jpg"></a><br/>
-										<a href="product_detail.html" class="title">ASUS Vivobook Max X441UA</a><br/>
-										<a href="#" class="category">intel Core i3, RAM 4GB DDR4</a>
-										<p class="price">9.790.000 đ</p>
-									</div>
-								</li>
-								<li class="span3">
-									<div class="product-box">												
-										<span class="sale_tag"></span>
-										<a href="product_detail.html"><img alt="" src="themes/images/cloth/anh4.png"></a><br/>
-										<a href="product_detail.html" class="title">Acer Chromebook R11 CB5-132T 11.6-Inch</a><br/>
-										<a href="#" class="category">i5 8250U/4GB/1TB/Win10</a>
-										<p class="price">16.500.000 đ</p>
-									</div>
-								</li>
-								<li class="span3">
-									<div class="product-box">												
-										<a href="product_detail.html"><img alt="" src="themes/images/cloth/anh8.png"></a><br/>
-										<a href="product_detail.html" class="title">ROG ZENPHYRUS(GX501)</a><br/>
-										<a href="#" class="category">Intel Core i7-7700HQ/24GB RAM/1TB SSD PCie</a>
-										<p class="price">16.500.000 đ</p>
-									</div>
-								</li>
-							</fieldset>
-							
-						</form>					
+							</div>
+							<br/>
+							<div class="form-group">
+								<label for="txtPWD" >Password</label>
+								<div class="col-sm-4">
+									<input type="password" class="form-control" id="txtPWD" placeholder="Password" name="rawPWD" required>
+								</div>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label for="txtCPWD" >Nhập lại</label>
+								<div class="col-sm-4">
+									<input type="password" class="form-control" id="txtCPWD" placeholder="Nhập lại password" name="cPWD" required>
+								</div>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label for="txtName" >Họ tên</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="txtName" placeholder="Họ tên" name="name" required value="<%= layoutVM.curUser.f_Name %>">
+								</div>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label for="txtName" >Số điện thoại</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="sdt" placeholder="Số điện thoại" name="sdt" required value="<%= layoutVM.curUser.f_sdt %>">
+								</div>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label for="txtEmail"  >Email</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="txtEmail" placeholder="Email" name="email" required value="<%= layoutVM.curUser.f_Email %>">
+								</div>
+							</div>
+							<br/>
+                            <%
+										var str = layoutVM.curUser.f_DOB;
+										var temp = str.toString().slice(0, 9);
+										var date = new Date(temp);
+										console.log("==========================ngay sinh update===" + layoutVM.curUser.f_DOB);
+                                        console.log("==========================ngay sinh update===" + date);
+											var month = date.getMonth()+1;
+											var thang="";
+											thang = month;
+											var ngayNhap = date.getDate().toString()+"/" + thang +"/"+ date.getFullYear().toString() ; 
+							%>
+							<div class="form-group">
+								<label for="txtDOB" >Ngày sinh</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="txtDOB" value="<%= ngayNhap %>" name="dob" required>
+								</div>
+							</div>
+							<div class="form-group">
+							<hr>
+								
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-success">
+										Cập nhật thông tin cá nhân
+									</button>
+								</div>
+							</div>
+						</form>		
+					
+						<!-- end -->		
 					</div>				
 				</div>
-			</section>
+			</section>		
+            <% if(ds.showError == true){ %>
+							<% if(ds.type == 2){ %>
+							<div class="alert alert-success">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<strong>Thông báo!</strong> <%= ds.errorMsg %>
+							</div>
+							<% } %>	
+						<% } %>			
 			<section style="background-color: #857474;" id="footer-bar">
 				<div class="row">
 					<div class="span3">
@@ -216,7 +252,7 @@
 							<li><a href="./index.html">Trang chủ</a></li>  
 							<li><a href="./about.html">Thông tin</a></li>
 							<li><a href="./contact.html">Liên hệ</a></li>
-							<li><a href="./cart.html">Giỏ hàng</a></li>
+							<li><a href="./cart">Giỏ hàng</a></li>
 							<li><a href="./register.html">Đăng nhập</a></li>							
 						</ul>					
 					</div>
@@ -274,15 +310,82 @@
 				})
 			});
 		</script>	
-
-			<script src="/javascripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+		<script type="text/javascript">
+			var accountRepo = require('../repos/accountRepo');
+			var attempt=3;
+			function validate(){
+				var user = {
+					 username: document.getElementById("username").value,
+					 password: document.getElementById("password").value
+				};
+				console.log(user);
+				
+				
+				accountRepo.login(user).then(rows => {
+					console.log(row);
+        		if (rows.length > 0) {
+					alert("Login successfully!");
+					window.location="/index.html";
+					return false;
+				}
+				else{
+					attempt--;
+					alert("Fail to login");
+				}
+				if(attempt==0){
+					document.getElementById("username").disabled=true;
+					document.getElementById("password").disabled=true;
+					document.getElementById("submit").disabled=true;
+					return false;
+				}
+			});
+			}
+			function validate1(){
+				var username=document.getElementById("username1").value;
+				var password=document.getElementById("password1").value;
+				var email=document.getElementById("email1").value;
+				if(username=="DHP" && password=="DHP" && email=="123@gmail.com")
+				{
+					alert("Create account successfully!");
+					window.location="index.html";
+					return false;
+				}
+				else{
+					attempt--;
+					alert("Fail to login");
+				}
+				if(attempt==0){
+					document.getElementById("username1").disabled=true;
+					document.getElementById("password1").disabled=true;
+					document.getElementById("email1").disabled=true;
+					document.getElementById("submit1").disabled=true;
+					return false;
+				}
+			}
+		</script>
+		<!-- kiem tra va format date-->
+		<script src="/javascripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 			<script type="text/javascript">
-				$('#').datepicker({
+				$('#txtDOB').datepicker({
 					format: 'd/m/yyyy',
 					autoclose: true
 				});
+			var validate = function() {
+				if ($('#txtUsername').val().length === 0) {
+					alert('Error');
+					return false;
+				}
+
+				if ($('#txtPWD').val() !== $('#txtCPWD').val()) {
+					alert('not match');
+					return false;
+				}
+
+				return true;
+			}
 			
 			</script>
-
+			
+		<!-- end-->
     </body>
 </html>
