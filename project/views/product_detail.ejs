@@ -62,7 +62,7 @@
 									<span class="caret"></span></button>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
 									<li><a role="menuitem" tabindex="-1" href="../customer.html">Chỉnh sửa thông tin</a></li>
-									<li><a role="menuitem" tabindex="-1" href="../customer.html">Xem lịch sử mua hàng</a></li>
+									<li><a role="menuitem" tabindex="-1" href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
 									<li><a role="menuitem" tabindex="-1" href="../logout.html">Thoát</a></li>
 									
 									</ul>
@@ -157,6 +157,7 @@
 									<strong>Loại:</strong> <span><%= nameCate %></span><br>	
 									<strong>Lượt xem:</strong> <span><%= danhsach.NumWatch %></span><br>
 									<strong>Đã bán:</strong> <span><%= danhsach.NumSale %></span><br>
+									<strong>Còn tại cửa hàng:</strong> <span><%= danhsach.NumStock %></span><br>
 									<strong>Xuất xứ:</strong> <span><%= danhsach.ProAddr %></span><br>							
 								</address>									
 								<h4><strong>Giá: <%= danhsach.ProPrice %></strong></h4>

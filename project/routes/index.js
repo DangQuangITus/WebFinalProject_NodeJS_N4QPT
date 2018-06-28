@@ -13,6 +13,8 @@ var nsxRepo = require('../repos/nsxRepo'); //nsx
 var categoryRepo = require('../repos/categoryRepo');
 var productRepo = require('../repos/productRepo');
 var billRepo = require('../repos/billRepo');
+var billInfoRepo = require('../repos/billInfoRepo');
+
 var customerRepo = require('../repos/customerRepo');
 //acc
 var accountRepo = require('../repos/accountRepo');
@@ -335,13 +337,13 @@ router.get('/product_detail.html/:id', function(req, res, next) {
                     var str = c.ProDateIn;
 										var temp = str.toString().slice(4, 15);
 										var date = new Date(temp);
-									//	console.log("===ngay nhap sua3===" + date);
+								console.log("===NumStock===" + c.NumStock);
 											var month = date.getMonth()+1;
 											var thang="";
 											thang = month;
                       var ngayNhap = date.getFullYear().toString()+ "-"+ thang + "-" +date.getDate().toString(); 
                       console.log(ngayNhap);
-                    productRepo.update(c.ProName, c.ProDec, c.CatID, c.nsxID, c.ProPrice, c.ProAddr, ngayNhap, c.NumSale, soLuong, c.CPU, c.RAM, c.Weight, c.HardDisk, c.ProID).then(value => {
+                    productRepo.update(c.ProName, c.ProDec, c.CatID, c.nsxID, c.ProPrice, c.ProAddr, ngayNhap, c.NumSale, soLuong, c.CPU, c.RAM, c.Weight, c.HardDisk, c.NumStock, c.ProID).then(value => {
 
                          res.render('product_detail', { danhsach: c, danhsach1: cate, danhsach2: nsx, danhsach3: ds1, danhsach4: ds2, danhsach5: sale });
                       }).catch(err => {
@@ -510,12 +512,13 @@ router.post('/sanpham.html', function(req, res, next) {
     //   thang = month;
     // }
     // ngayNhap = date.getFullYear().toString() +"-" + thang +"-"+date.getDate().toString(); 
-
+    var stock = req.body.NumStock;
+    console.log("stock : ========= " + stock);
     ngayNhap = dob;
     var xuatxu = req.body.xuatxu;
     console.log("** *** ngay nhap2: " + ngayNhap);
     console.log("ten: " + ten + " ;CatID: " + CatID + " ;nsxID: " + nsxID + " ;gia: " + gia + " ;ngayNhap: " + ngayNhap + " ;xuatxu: " + xuatxu);
-    productRepo.add(ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, cpu,ram, weight, harddisk ).then(value => {
+    productRepo.add(ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, cpu,ram, weight, harddisk, stock ).then(value => {
       res.redirect('/sanpham.html');
 
     }).catch(err => {
@@ -550,7 +553,7 @@ router.post('/suasp/:idsua', function(req, res, next) {
     var CatID = req.body.loai;
     var nsxID = req.body.nsx;
     var gia = req.body.gia;
-
+    var stock = req.body.NumStock;
     var cpu = req.body.cpu;
     var ram = req.body.ram;
     var weight = req.body.weight;
@@ -583,7 +586,7 @@ var ngayNhap = dob;
   console.log("id can sua la: " + id);
   console.log("ten: " + ten + " ;CatID: " + CatID + " ;nsxID: " + nsxID + " ;gia: " + gia + " ;ngayNhap: " + ngayNhap + " ;xuatxu: " + xuatxu);
 
-  productRepo.update(ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, NumSale, NumWatch, cpu, ram, weight, harddisk, id).then(value => {
+  productRepo.update(ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, NumSale, NumWatch, cpu, ram, weight, harddisk,stock, id).then(value => {
     res.redirect('/sanpham.html');
 
   }).catch(err => {
@@ -1215,7 +1218,8 @@ var dob = moment(req.body.dob, 'D/M/YYYY')
       email: req.body.email,
       dob: dob,
       permission: 0,
-      Id: req.body.CusId
+      Id: req.body.CusId,
+      sdt: req.body.sdt
   };
   
   customerRepo.update(user).then(value => {
@@ -1257,7 +1261,8 @@ router.post('/buy.html', function(req, res, next) {
         email: req.body.email,
         dob: dob,
         permission: 0,
-        Id: req.body.CusId
+        Id: req.body.CusId,
+        sdt: req.body.sdt
     };
     
     customerRepo.update(user).then(value => {
@@ -1402,19 +1407,140 @@ router.post('/thanhtoan', function(req, res, next) {
   var dob = moment(req.body.dob, 'D/M/YYYY')
         .format('YYYY-MM-DD');
     console.log(" ** *** ngay nhap: " + dob);
-    var ngayNhap = dob;
+    var ngayNhap1 = dob;
  // var ngayNhap = req.body.ngayNhap;
  // var status = req.body.status;
  var status = "Chưa giao";
 
  //tang sl ban
  
-  billRepo.add(ten, diaChi, sdt, ngayNhap, status).then(value => {
-    res.redirect('/cart');
+  billRepo.add(ten, diaChi, sdt, ngayNhap1, status).then(value => {
+                        console.log("======================req.session.cart===========================");
+                        console.log(req.session.cart);
+                        console.log("=================================================");
+                        
+                        for (var i = 0; i < req.session.cart.length; i++) {
+                            var cartItem = req.session.cart[i];
+                            //cap nhat lai chi tiet hoa don
+                            billInfoRepo.add(sdt, cartItem.ProId, cartItem.Quantity).then(value => {
 
+                                           
+                            }).catch(err => {
+                              res.end('fail');
+                          });
+                           productRepo.single(cartItem.ProId).then(c => {
+                            
+                             console.log("======================c===========================");
+                             console.log(c);  
+                             console.log("======================c===========================");
+
+                             var soLuong = c.NumSale + cartItem.Quantity;
+                             var kho = c.NumStock - cartItem.Quantity;
+                              //console.log("kho ==========" + kho);
+                              //console.log("soluong: " + soLuong + "====nsx : " + c.nsxID + " ==== loai: " + c.CatID +" = proname== " + c.ProName+" = prodec== " + c.ProDec+" = proprice== " + c.ProPrice+" = addr== " + c.ProAddr+" = datein== " + c.ProDateIn +" = númale== " +  c.NumSale+" = cpu== " + c.CPU+" = ram== " +  c.RAM+" = weight == " +  c.Weight+" = HardDisk== " +  c.HardDisk+" = id== " +  c.ProID);
+                              //ngay
+                              var str = c.ProDateIn;
+                              var temp = str.toString().slice(4, 15);
+                              var date = new Date(temp);
+                            //	console.log("===ngay nhap sua3===" + date);
+                                var month = date.getMonth()+1;
+                                var thang="";
+                                thang = month;
+                                var ngayNhap = date.getFullYear().toString()+ "-"+ thang + "-" +date.getDate().toString(); 
+                                console.log(ngayNhap);
+                                  productRepo.update(c.ProName, c.ProDec, c.CatID, c.nsxID, c.ProPrice, c.ProAddr, ngayNhap, soLuong, c.NumWatch, c.CPU, c.RAM, c.Weight, c.HardDisk, kho, c.ProID).then(value => {
+                                  
+                                      }).catch(err => {
+                                        res.end('fail');
+                                    });
+                    //
+                           });
+                        }
+    //res.redirect('/cart');
+    res.redirect('/cart');
   }).catch(err => {
       res.end('fail');
   });
  
 });
+
+/* GET history page. */
+router.get('/history/:id', function(req, res, next) {
+  var sdt = req.params.id;
+  //
+var cate;
+var nsx;
+var ds1;
+var ds2;
+var sale;
+var limit = 6;
+var offset = 0;
+
+  productcateRepo.loadAll().then(rows1 => {
+  cate = { danhsachsv1 : rows1};
+  nsxRepo.loadAll().then(rows2 => {
+    nsx = { danhsachsv2 : rows2};
+              productRepo.loadAllTopSale().then(rows5 => {
+                sale = { danhsachsv5 : rows5};
+               
+                   // var sdt = "0123456";
+                    billRepo.loadAllsdt(sdt).then(rows => {
+                         // console.log(rows);
+                          var dulieu = { danhsachsv : rows};
+                         
+                         
+                        res.render('history', { danhsach: dulieu, danhsach1: cate, danhsach2: nsx,  danhsach5: sale});
+
+                      });
+                       
+                   //   });
+
+        });
+      });
+  });
+});
+
+/* GET history page. */
+router.get('/historydetail/:id', function(req, res, next) {
+  var id = req.params.id;
+
+  //
+var cate;
+var nsx;
+var ds1;
+var ds2;
+var sale;
+var limit = 6;
+var offset = 0;
+var dulieu1; 
+
+  productcateRepo.loadAll().then(rows1 => {
+  cate = { danhsachsv1 : rows1};
+  nsxRepo.loadAll().then(rows2 => {
+    nsx = { danhsachsv2 : rows2};
+              productRepo.loadAllTopSale().then(rows5 => {
+                sale = { danhsachsv5 : rows5};
+              
+                   // var sdt = "0123456";
+                    billInfoRepo.loadAllsdt(id).then(rows4 => {
+                      console.log("+==================billInfoRepo======================== id: " + id);
+                          console.log(rows4);
+                          dulieu1 = { danhsachsv1 : rows4};
+                         
+                          productRepo.loadAll().then(rows => {
+                            // console.log(rows);
+                             var dulieu = { danhsachsv : rows};
+                            
+                             res.render('historydetail', { danhsach0: dulieu1, danhsach: dulieu, danhsach1: cate, danhsach2: nsx,  danhsach5: sale});
+
+                         });
+
+                      });
+                       
+
+        });
+      });
+  });
+});
+
 module.exports = router;

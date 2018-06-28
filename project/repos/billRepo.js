@@ -41,3 +41,8 @@ exports.update = (ten, diaChi, SDT, ngayNhap, Status, id) => {
 
     return db.save(sql);
 }
+
+exports.loadAllsdt = (sdt) => {
+    var sql = "SELECT * FROM bill where SDT = '"+ sdt+"'order by date desc;";//giam dan ngay lap
+    return db.load(sql);
+}
