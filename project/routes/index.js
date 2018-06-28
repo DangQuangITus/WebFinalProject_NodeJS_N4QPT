@@ -22,11 +22,10 @@ var cartRepo = require('../repos/cartRepo');
 
 
 /* GET home page. */
-router.use("/index.html", require(__dirname + "/homepage"));
-
 router.get('/index.html', function(req, res, next) {
   var watch;
   var sale;
+
   
     //
     var cate;
@@ -46,79 +45,25 @@ router.get('/index.html', function(req, res, next) {
           productRepo.loadAllTopSale().then(rows1 => {
             console.log(rows1);
             sale = { danhsachsv2 : rows1};
-            
+
             productRepo.loadAllTopDate().then(rows => {
               console.log(rows);
               var dulieu = { danhsachsv : rows};
               res.render('index', { danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx });
             });
-            
+
           });
-          
+
+
         });
 
       });
     });
   //res.render('index', { title: 'Final Project - Laptop Store Website - N4QPT' });
 });
-/* GET dashboard page. */
 
 
-router.get('/index1.html', function(req, res, next) {
-  // categoryRepo.loadAll().then(rows => {
-  //   // console.log(rows);
-  //   var vm = {
-  //       categories: rows
-  //   };
-  // });
-  res.render('index1', { title: 'dashboard' });
-});
-/* GET product page. */
-router.get('/products.html', function(req, res, next) {
-  res.render('products', { title: 'product' });
-});
-/* ban chay */
-router.get('/products.html/topsale', function(req, res, next) {
-  var watch;
-  var sale;
-  
-    //
-    var cate;
-    var nsx;
-    productcateRepo.loadAll().then(rows3 => {
-      console.log(rows3);
-      cate = { danhsachsv3 : rows3};
-      
-      nsxRepo.loadAll().then(rows4 => {
-        console.log(rows4);
-        nsx = { danhsachsv4 : rows4};
-
-        productRepo.loadAllTopWatch().then(rows2 => {
-          console.log(rows2);
-          watch = { danhsachsv1 : rows2};
-          
-          productRepo.loadAllTopSale().then(rows1 => {
-            console.log(rows1);
-            sale = { danhsachsv : rows1};
-            
-            productRepo.loadAllTopDate().then(rows => {
-              console.log(rows);
-              var dulieu = { danhsachsv2 : rows};
-              res.render('products2', { danhsach: sale, danhsach1: watch, danhsach2: dulieu, danhsach3: cate, danhsach4: nsx, page: null });
-            });
-            
-          });
-          
-          
-        });
-      });
-    });
-  });
-// /* GET product page. */
-router.use("/products.html", require(__dirname + "/products"));
-
-
-// lọc sản phẩm
+// Lọc sản phẩm//
 router.get("/products.html/sanpham", function(req, res, next){
   var gia = req.param('price');
   var sanpham = req.param('sanpham');
@@ -232,12 +177,67 @@ router.get("/products.html/sanpham", function(req, res, next){
    });
  });
 
-});
+}); 
+/* GET dashboard page. */
 
+router.get('/index1.html', function(req, res, next) {
+  // categoryRepo.loadAll().then(rows => {
+  //   // console.log(rows);
+  //   var vm = {
+  //       categories: rows
+  //   };
+  // });
+  res.render('index1', { title: 'dashboard' });
+});
+/* GET product page. */
+router.get('/products.html', function(req, res, next) {
+  res.render('products', { title: 'product' });
+});
+/* ban chay */
+router.get('/products.html/topsale', function(req, res, next) {
+  var watch;
+  var sale;
+
+  
+    //
+    var cate;
+    var nsx;
+    productcateRepo.loadAll().then(rows3 => {
+      console.log(rows3);
+      cate = { danhsachsv3 : rows3};
+      
+      nsxRepo.loadAll().then(rows4 => {
+        console.log(rows4);
+        nsx = { danhsachsv4 : rows4};
+
+        productRepo.loadAllTopWatch().then(rows2 => {
+          console.log(rows2);
+          watch = { danhsachsv1 : rows2};
+          
+          productRepo.loadAllTopSale().then(rows1 => {
+            console.log(rows1);
+            sale = { danhsachsv : rows1};
+
+            productRepo.loadAllTopDate().then(rows => {
+              console.log(rows);
+              var dulieu = { danhsachsv2 : rows};
+              res.render('products2', { danhsach: sale, danhsach1: watch, danhsach2: dulieu, danhsach3: cate, danhsach4: nsx, page: null });
+            });
+
+          });
+
+
+        });
+
+      });
+    });  
+  //res.render('products', { title: 'product' });
+});
+/* moi nhat chay */
 router.get('/products.html/new', function(req, res, next) {
   var watch;
   var sale;
-  
+
   
     //
     var cate;
@@ -257,22 +257,21 @@ router.get('/products.html/new', function(req, res, next) {
           productRepo.loadAllTopSale().then(rows1 => {
             console.log(rows1);
             sale = { danhsachsv2 : rows1};
-            
+
             productRepo.loadAllTopDate().then(rows => {
               console.log(rows);
               var dulieu = { danhsachsv : rows};
               res.render('products2', { danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx, page: null });
             });
-            
+
           });
-          
-          
+
+
         });
 
       });
     });  
   });
-// >>>>>>> 455d16733dab3a28dc6fba79dc4b9e070599a27c
 //lay theo nsx
 router.get('/products.nsx/:id', function(req, res, next) {
   var id = req.params.id;
@@ -323,7 +322,10 @@ router.get('/products.nsx/:id', function(req, res, next) {
           console.log("==========================vm==============================");
           console.log(vm);
         });
+
+
     
+
   //-------------------------------
   productcateRepo.loadAll().then(rows1 => {
    // console.log(rows);
@@ -333,7 +335,8 @@ router.get('/products.nsx/:id', function(req, res, next) {
      nsx = { danhsachsv4 : rows2};
      productRepo.loadAllnsx(id, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
       var dulieu = { danhsachsv : rows3};
-      
+
+
       res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id });
 
     });
@@ -392,6 +395,9 @@ router.get('/products.cate/:id', function(req, res, next) {
           console.log(vm);
         });
 
+
+
+
   //-------------------------------
   productcateRepo.loadAll().then(rows1 => {
    // console.log(rows);
@@ -401,25 +407,18 @@ router.get('/products.cate/:id', function(req, res, next) {
      nsx = { danhsachsv4 : rows2};
      productRepo.loadAllcate(id, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
       var dulieu = { danhsachsv : rows3};
-      res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id,title:cate });
-      // =======
-      nsx = { danhsachsv4 : rows2};
-      productRepo.loadAllcate(id, config.PRODUCTS_PER_PAGE, offset).then(rows3 => {
-        var dulieu = { danhsachsv : rows3};
-        
-        res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id });
 
-      });
+
+      res.render('products2', { danhsach: dulieu, danhsach3: cate, danhsach4: nsx, page: vm, IDCat: id });
+
     });
    });
  });
 });
-
 /* GET product_detail page. */
 router.get('/product_detail.html', function(req, res, next) {
  res.render('product_detail', { title: 'product_detail' });
 });
-
 router.get('/product_detail.html/:id', function(req, res, next) {
   var id = req.params.id;
   var cate;
@@ -443,13 +442,32 @@ router.get('/product_detail.html/:id', function(req, res, next) {
           productRepo.loadAllcate(c.CatID, limit, offset).then(rows4 => {
             ds2 = { danhsachsv4 : rows4};
             productRepo.loadAllTopSale().then(rows5 => {
-              sale = { danhsachsv5 : rows5};
+                    //console.log(rows5);
+                    sale = { danhsachsv5 : rows5};
+                    //tang sl xem 
+                    var soLuong = c.NumWatch + 1;
+                    console.log("soluong: " + soLuong + "====nsx : " + c.nsxID + " ==== loai: " + c.CatID +" = proname== " + c.ProName+" = prodec== " + c.ProDec+" = proprice== " + c.ProPrice+" = addr== " + c.ProAddr+" = datein== " + c.ProDateIn +" = númale== " +  c.NumSale+" = cpu== " + c.CPU+" = ram== " +  c.RAM+" = weight == " +  c.Weight+" = HardDisk== " +  c.HardDisk+" = id== " +  c.ProID);
+                    //ngay
+                    var str = c.ProDateIn;
+                    var temp = str.toString().slice(4, 15);
+                    var date = new Date(temp);
+									//	console.log("===ngay nhap sua3===" + date);
+                 var month = date.getMonth()+1;
+                 var thang="";
+                 thang = month;
+                 var ngayNhap = date.getFullYear().toString()+ "-"+ thang + "-" +date.getDate().toString(); 
+                 console.log(ngayNhap);
+                 productRepo.update(c.ProName, c.ProDec, c.CatID, c.nsxID, c.ProPrice, c.ProAddr, ngayNhap, c.NumSale, soLuong, c.CPU, c.RAM, c.Weight, c.HardDisk, c.ProID).then(value => {
 
-              res.render('product_detail', { danhsach: c, danhsach1: cate, danhsach2: nsx, danhsach3: ds1, danhsach4: ds2, danhsach5: sale });
-            });
+                   res.render('product_detail', { danhsach: c, danhsach1: cate, danhsach2: nsx, danhsach3: ds1, danhsach4: ds2, danhsach5: sale });
+                 }).catch(err => {
+                  res.end('fail');
+                });
+
+               });
           });
         });
-         
+
        });
      });
    });
@@ -562,7 +580,7 @@ router.get('/sanpham.html', function(req, res, next) {
   productcateRepo.loadAll().then(rows3 => {
     console.log(rows3);
     cate = { danhsachsv1 : rows3};
-    
+
     nsxRepo.loadAll().then(rows2 => {
       console.log(rows2);
       nsx = { danhsachsv2 : rows2};
@@ -575,8 +593,11 @@ router.get('/sanpham.html', function(req, res, next) {
 
     });
 
-    
+
   });
+
+  
+
 
  // res.render('sanpham', { title: 'sanpham' });
 });
@@ -634,8 +655,8 @@ router.get('/suasp/:idsua', function(req, res, next) {
       });
     });
   });
-  
-  
+
+
 });
 
 router.post('/suasp/:idsua', function(req, res, next) {
@@ -697,7 +718,7 @@ router.get('/xoasp/:idxoa', function(req, res, next) {
   }).catch(err => {
     res.end('fail');
   });
-  
+
 });
 
 /* GET sanpham1.html page. */
@@ -771,7 +792,6 @@ nsxRepo.loadAll().then(rows => {
 });
   //res.render('sanpham2', { title: 'nha san xuat' });
 });
-
 /* GET checkout.html page. */
 router.get('/calendar.html', function(req, res, next) {
   res.render('calendar', { title: 'lich' });
@@ -791,7 +811,7 @@ router.get('/test.html', function(req, res, next) {
   });
 
   connection.connect();
-  
+
   connection.query("SELECT * FROM `categories`", function (error, rows) {
     if (error) throw error;
     console.log('The solution is: ', rows);
@@ -832,7 +852,7 @@ router.post('/them.html', function(req, res, next) {
 
 
       connection.end();
-      
+
     });
   }
   res.render('them', {data: 'text'});
@@ -878,9 +898,9 @@ router.get('/sua/:idsua', function(req, res, next) {
 
   var connection = mysql.createConnection({
     host: 'localhost',
-    port: 33060,
+    port: 3306,
     user: 'root',
-    password: 'vertrigo',
+    password: '1234',
     database: 'qlbh'
   });
 
@@ -920,7 +940,7 @@ router.post('/sanpham1.html', function(req, res, next) {
   //   console.log('The solution is: ', ten);
 
   //   //load update
-  
+
 
   //   connection.end();
   // });
@@ -1190,16 +1210,6 @@ router.get('/', function(req, res, next) {
   res.redirect('index.html');
 });
 
-router.post("/products.html", function(req, res, next){
-
-  var price = req.body.price;
-  var sanpham = req.body.sanpham;
-  var sanxuat = req.body.sanxuat;
-
-  // url = "/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat;
-  res.redirect("/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat);
-});
-
 router.post('/login.html', function(req, res, next) {
   //console.log("VO ne");
   console.log(req.body.username);
@@ -1243,13 +1253,44 @@ router.post('/login.html', function(req, res, next) {
 
 /* GET register.html page. */
 router.get('/register.html', function(req, res, next) {
+  var watch;
+  var sale;
   var vm = {
     showError: false,
     errorMsg: '',
     type: 0
   };
-  res.render('register', {ds: vm});
   
+    //
+    var cate;
+    var nsx;
+    productcateRepo.loadAll().then(rows3 => {
+      console.log(rows3);
+      cate = { danhsachsv3 : rows3};
+      
+      nsxRepo.loadAll().then(rows4 => {
+        console.log(rows4);
+        nsx = { danhsachsv4 : rows4};
+
+        productRepo.loadAllTopWatch().then(rows2 => {
+          console.log(rows2);
+          watch = { danhsachsv1 : rows2};
+          
+          productRepo.loadAllTopSale().then(rows1 => {
+            console.log(rows1);
+            sale = { danhsachsv2 : rows1};
+
+            productRepo.loadAllTopDate().then(rows => {
+              console.log(rows);
+              var dulieu = { danhsachsv : rows};
+              res.render('register', {ds: vm, danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx });
+            });
+          });
+        });
+      });
+    });
+
+  // res.render('register', {ds: vm});
   //res.render('register', { title: 'register' });
 });
 
@@ -1295,18 +1336,51 @@ router.get('/logout1.html', function(req, res, next) {
 });
 /*----------Thong Tin Ca Nhan ---------------------*/
 /* GET register.html page. */
+
 router.get('/customer.html', function(req, res, next) {
+  var watch;
+  var sale;
   var vm = {
     showError: false,
     errorMsg: '',
     type: 0
   };
-  res.render('customer', {ds: vm});
+  
+    //
+    var cate;
+    var nsx;
+    productcateRepo.loadAll().then(rows3 => {
+      console.log(rows3);
+      cate = { danhsachsv3 : rows3};
+      
+      nsxRepo.loadAll().then(rows4 => {
+        console.log(rows4);
+        nsx = { danhsachsv4 : rows4};
+
+        productRepo.loadAllTopWatch().then(rows2 => {
+          console.log(rows2);
+          watch = { danhsachsv1 : rows2};
+          
+          productRepo.loadAllTopSale().then(rows1 => {
+            console.log(rows1);
+            sale = { danhsachsv2 : rows1};
+
+            productRepo.loadAllTopDate().then(rows => {
+              console.log(rows);
+              var dulieu = { danhsachsv : rows};
+              res.render('customer', {ds: vm, danhsach: dulieu, danhsach1: watch, danhsach2: sale, danhsach3: cate, danhsach4: nsx });
+            });
+          });
+        });
+      });
+    });
+
+    
+    // res.render('customer', {ds: vm});
   //res.render('register', { title: 'register' });
 });
 
 router.post('/customer.html', function(req, res, next) {
-
 
   var dob = moment(req.body.dob, 'D/M/YYYY')
   .format('YYYY-MM-DDTHH:mm');
@@ -1324,7 +1398,7 @@ router.post('/customer.html', function(req, res, next) {
       permission: 0,
       Id: req.body.CusId
     };
-    
+
     customerRepo.update(user).then(value => {
       var vm = {
         showError: true,
@@ -1334,11 +1408,11 @@ router.post('/customer.html', function(req, res, next) {
       accountRepo.login(user).then(rows => {
         if (rows.length > 0) {
           req.session.user = rows[0];
-          
+
           console.log(" =================== req.session.user ***** ============================");
           console.log(req.session.user );
-          
-          
+
+
         }
       });
       res.render('customer', {ds: vm});
@@ -1366,7 +1440,7 @@ router.post('/buy.html', function(req, res, next) {
         permission: 0,
         Id: req.body.CusId
       };
-      
+
       customerRepo.update(user).then(value => {
         var vm = {
           showError: true,
@@ -1376,11 +1450,11 @@ router.post('/buy.html', function(req, res, next) {
         accountRepo.login(user).then(rows => {
           if (rows.length > 0) {
             req.session.user = rows[0];
-            
+
             console.log(" =================== req.session.user ***** ============================");
             console.log(req.session.user );
-            
-            
+
+
           }
         });
         res.render('customer', {ds: vm});
@@ -1399,7 +1473,7 @@ router.get('/cart', function(req, res, next) {
       var sale;
       var limit = 6;
       var offset = 0;
-      
+
       productcateRepo.loadAll().then(rows1 => {
         cate = { danhsachsv1 : rows1};
         nsxRepo.loadAll().then(rows2 => {
@@ -1410,75 +1484,44 @@ router.get('/cart', function(req, res, next) {
             console.log("======================req.session.cart===========================");
             console.log(req.session.cart);
             console.log("=================================================");
-            
+
             for (var i = 0; i < req.session.cart.length; i++) {
               var cartItem = req.session.cart[i];
-                           // var p = productRepo.single(cartItem.ProId);
-                           productRepo.single(cartItem.ProId).then(c => {
-                            // console.log("========================= *** c ***  ==========================");
+              productRepo.single(cartItem.ProId).then(c => {
 
-                            // var p = c;
-                            // console.log(c);
-                            arr_p.push(c);
-                            // console.log("========================= *** c ***  ==========================");
-                            //  console.log(c);
-                             //console.log("========================= *** arr_p 11***  ==========================");
-                            // console.log(arr_p);
-                            console.log("=================================================");
-                          });
-                         }
-                         console.log("========================= *** arr_p ***  ==========================");
-                         console.log(arr_p);
-                         console.log("=================================================");
+                arr_p.push(c);
+                console.log("=================================================");
+              });
+            }
+            console.log("========================= *** arr_p ***  ==========================");
+            console.log(arr_p);
+            console.log("=================================================");
 
-                         var numbers = [];
-                         for (i = 0; i < req.session.cart.length; i++) {
-                             // var cartItem = req.session.cart[i];
-                             // productRepo.single(cartItem.ProId).then(c => {
+            var numbers = [];
+            for (i = 0; i < req.session.cart.length; i++) {
+              numbers.push({
+                value: i
+              });
+            }
+            console.log("==========================numbers============================");
+            console.log(numbers);
+            
+            productRepo.loadAll().then(rows => {
+             var dulieu = { danhsachsv : rows};
+             var vm = {
+              items: req.session.cart
+            };
+            console.log("========================= *** items 11 ***  ==========================");
+            console.log(vm.items);
+            res.render('cart', { danhsach: dulieu, danhsach1: cate, danhsach2: nsx,  danhsach5: sale, ds: vm });
 
-                              numbers.push({
-                                value: i
-                                
-                              });
-                            //   });
-                            
-                          }
-                          console.log("==========================numbers============================");
-                          console.log(numbers);
-                        // var items = [];
-                        // Promise.all(arr_p).then(result => {
-                        //   console.log("==========================result============================");
-                        //   console.log(result);
-                        //     for (var i = arr_p.length - 1; i >= 0; i--) {
-                        //         var pro = arr_p[i][0];
-                        //         var item = {
-                        //             Product: pro,
-                        //             Quantity: req.session.cart[i].Quantity,
-                        //             Amount: pro.ProPrice * req.session.cart[i].Quantity
-                        //         };
-                        //         console.log("========================= *** item 0000000 ***  ==========================");
-                        //      console.log(item);
-                        //         items.push(item);
-                        //     }
-                        productRepo.loadAll().then(rows => {
-                             // console.log(rows);
-                             var dulieu = { danhsachsv : rows};
-                             var vm = {
-                              items: req.session.cart
-                            };
-                            console.log("========================= *** items 11 ***  ==========================");
-                            console.log(vm.items);
-                            res.render('cart', { danhsach: dulieu, danhsach1: cate, danhsach2: nsx,  danhsach5: sale, ds: vm });
-
-                          });
-                        
-                       //   });
-
-                     });
+          });
+          });
         });
       });
   //res.render('cart', { title: 'cart' });
 });
+
 
 
 router.post('/cart/add', (req, res) => {
@@ -1500,5 +1543,40 @@ router.post('/cart/remove', (req, res) => {
   res.redirect(req.headers.referer);
 });
 
+
+router.post('/thanhtoan', function(req, res, next) {
+  var diaChi = req.body.diaChi;
+  var ten = req.body.ten;
+  var sdt = req.body.sdt;
+  var dob = moment(req.body.dob, 'D/M/YYYY')
+  .format('YYYY-MM-DD');
+  console.log(" ** *** ngay nhap: " + dob);
+  var ngayNhap = dob;
+ // var ngayNhap = req.body.ngayNhap;
+ // var status = req.body.status;
+ var status = "Chưa giao";
+
+ //tang sl ban
+ 
+ billRepo.add(ten, diaChi, sdt, ngayNhap, status).then(value => {
+  res.redirect('/cart');
+
+}).catch(err => {
+  res.end('fail');
+});
+
+});
+
+
+router.post("/products.html", function(req, res, next){
+
+  var price = req.body.price;
+  var sanpham = req.body.sanpham;
+  var sanxuat = req.body.sanxuat;
+
+  // url = "/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat;
+  res.redirect("/products.html/sanpham?price=" +price+ "&sanpham=" +sanpham+ "&sanxuat=" +sanxuat);
+
+});
 
 module.exports = router;
