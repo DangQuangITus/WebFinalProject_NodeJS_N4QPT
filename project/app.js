@@ -25,7 +25,7 @@ app.use(cookieParser());
 var handleLayoutMDW = require('./middle-wares/handleLayout'),
 handle404MDW = require('./middle-wares/handle404'),
 restrict = require('./middle-wares/restrict');
-
+var $ = require('jquery');
 // session
 
 var sessionStore = new MySQLStore({

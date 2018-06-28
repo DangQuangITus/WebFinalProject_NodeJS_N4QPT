@@ -20,6 +20,28 @@ var SHA256 = require('crypto-js/sha256');
 //cart
 var cartRepo = require('../repos/cartRepo');
 
+router.get("/cart/delete", function(req, res, next){
+  var id = req.param('id');
+  console.log(id);
+
+  cartRepo.remove(req.session.cart,id);
+  res.redirect("/cart");
+
+});
+
+
+router.get("/cart/update", function(req, res, next){
+  var id = req.param('id');
+  var num = req.param('num');
+  console.log(id);
+  console.log(num);
+  // res.send(num);
+
+  cartRepo.add(req.session.cart,id,num);
+  res.redirect("/cart");
+
+});
+
 
 /* GET home page. */
 router.get('/index.html', function(req, res, next) {
@@ -1505,7 +1527,7 @@ router.get('/cart', function(req, res, next) {
             }
             console.log("==========================numbers============================");
             console.log(numbers);
-            
+
             productRepo.loadAll().then(rows => {
              var dulieu = { danhsachsv : rows};
              var vm = {

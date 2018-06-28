@@ -22,6 +22,7 @@
 	<link rel="stylesheet" type="text/css" href="/themes/css/font-awesome.min3.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 	<!-- scripts -->
+
 	<script src="/themes/js/jquery-1.7.2.min.js"></script>
 	<script src="/stylesheets/bootstrap/js/bootstrap.min.js"></script>				
 	<script src="/themes/js/superfish.js"></script>	
@@ -140,70 +141,79 @@
 											<% danhsach.danhsachsv.forEach(function (motphantu){		%>
 											<% if(motphantu.ProID == ds.items[i].ProId){ %>
 											<tr>
-												<form action="/cart" method="post">
-													<td><a href="../product_detail.html/<%= motphantu.ProID %>"><img alt="" src="/themes/images/cloth/<%= motphantu.ProID %>/lap.png"></a></td>
-													<td style="padding-top: 15px;"><%= motphantu.ProName %></td>
-													<td><input type="text" name="num" placeholder="nhập số" value="<%= ds.items[i].Quantity %>" class="input-mini" ></td>
-													<td style="padding-top: 15px;"><%= motphantu.ProPrice %></td>
-													<td><input type="button" class="btn btn-danger form-group" name="" value="Delete"></td>
-													<td><input type="button" class="btn btn-primary form-group" name="" value="Update"></
+												<td><a href="../product_detail.html/<%= motphantu.ProID %>"><img alt="" src="/themes/images/cloth/<%= motphantu.ProID %>/lap.png"></a></td>
+												<td style="padding-top: 15px;"><%= motphantu.ProName %></td>
+												<td><input id="numin" type="text" name="numin" placeholder="nhập số" value="<%= ds.items[i].Quantity %>" class="input-mini" >
+													<div>
+														<button class="btn btn-success" onclick="myFunction3()" >
+															<span class="fas fa-plus-circle"></span> Tăng số lượng 
+														</button>
+													</div>
+												</td>
+												<td style="padding-top: 15px;"><%= motphantu.ProPrice %></td>
+												<td>
+													<button id="update" class="btn btn-primary form-group" name="" >
+														<a href="../cart/update?id=<%=motphantu.ProID%>&num=1">Update
+														</a> 
+													</button>
+												</td>
+												<td><button id="delete" class="btn btn-danger form-group" name=""><a href="../cart/delete?id=<%=motphantu.ProID%>">Delete</a></button> </td>
 
-													</form>
-												</tr>
-												<% 
-												var str = motphantu.ProPrice;
-												var x = motphantu.ProPrice.length - 1;
-												var temp = str.toString().slice(0, x);
-												var so = ds.items[i].Quantity;
-												console.log("========== money =====" + temp);
-												total = total + so*temp;
+											</tr>
+											<% 
+											var str = motphantu.ProPrice;
+											var x = motphantu.ProPrice.length - 1;
+											var temp = str.toString().slice(0, x);
+											var so = ds.items[i].Quantity;
+											console.log("========== money =====" + temp);
+											total = total + so*temp;
 
-												%>
-												<% } %>
+											%>
+											<% } %>
 
-												<% }) %>
-												<% } %>
-
+											<% }) %>
+											<% } %>
 
 
-												<tr>
-													<td>&nbsp;</td>
-													<td>&nbsp;</td>
-													<td>&nbsp;</td>
-													<td>&nbsp;</td>
-													<td>&nbsp;</td>
-													<td><strong> Tổng tiền: </strong><strong><span id="total"><%= total%>đ</span></strong></td>
-												</tr>		  
-											</tbody>
-										</table>
-										<h4> Thanh toán </h4>
 
-										<hr/>
+											<tr>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td><strong> Tổng tiền: </strong><strong><span id="total"><%= total%>đ</span></strong></td>
+											</tr>		  
+										</tbody>
+									</table>
+									<h4> Thanh toán </h4>
 
+									<hr/>
+
+
+								</div>
+								<form action="/thanhtoan" method="post">
+
+									<div class="form-group">
+										<label for="ten">Tên khách hàng:</label>
+										<input type="text" class="form-control" id="ten" name="ten"  value="<%= layoutVM.curUser.f_Username %>">
+									</div>
+									<div class="form-group">
+										<label for="diaChi">Địa chỉ khách hàng:</label>
+										<textarea class="form-control" rows="5" cols="3000" id="diaChi" name="diaChi" ></textarea>
+									</div>
+
+									<div class="form-group">
+										<label for="sdt">Số điện thoại:</label>
+										<input type="textarea" class="form-control" id="sdt" name="sdt">
+									</div>
+
+									<div class="form-group">
+										<label for="txtDOB">Ngày thanh toán</label>
+
+										<input type="text" class="form-control" id="txtDOB" placeholder="dd/mm/yyyy" name="dob">
 
 									</div>
-									<form action="/thanhtoan" method="post">
-
-										<div class="form-group">
-											<label for="ten">Tên khách hàng:</label>
-											<input type="text" class="form-control" id="ten" name="ten"  value="<%= layoutVM.curUser.f_Username %>">
-										</div>
-										<div class="form-group">
-											<label for="diaChi">Địa chỉ khách hàng:</label>
-											<textarea class="form-control" rows="5" cols="3000" id="diaChi" name="diaChi" ></textarea>
-										</div>
-
-										<div class="form-group">
-											<label for="sdt">Số điện thoại:</label>
-											<input type="textarea" class="form-control" id="sdt" name="sdt">
-										</div>
-
-										<div class="form-group">
-											<label for="txtDOB">Ngày thanh toán</label>
-
-											<input type="text" class="form-control" id="txtDOB" placeholder="dd/mm/yyyy" name="dob">
-
-										</div>
 
 							<!--		<div class="form-group">
 										<label for="status">Tình trạng:</label>
@@ -318,11 +328,48 @@
 							interval: 2500
 						});								
 					});
+
+
+					// $(function(){				
+					// 	$('#delete').click(function(e){
+					// 		e.preventDefault();
+					// 		console.log('select_link clicked');
+
+					// 		var data = {};
+					// 		data.id = "title";
+					// 		data.message = "message";
+
+					// 		$.ajax({
+					// 			type: 'POST',
+					// 			data: JSON.stringify(data),
+					// 			contentType: 'application/json',
+					// 			url: 'http://localhost:3000/endpoint',						
+					// 			success: function(data) {
+					// 				console.log('success');
+					// 				console.log(JSON.stringify(data));
+					// 			}
+					// 		});
+					// /*$.ajax('http://localhost:3000/endpoint', {
+					//         type: 'POST',
+					//         data: JSON.stringify(data),
+					//         contentType: 'application/json',
+					//         success: function() { console.log('success');},
+					//         error  : function() { console.log('error');}
+					//     });*/
+					// });				
+					// });
+
 				</script>
 
 				<script>
 					function myFunction() {
 						document.getElementById("total").value = document.getElementById("txtq").value + 1;
+					}
+
+				</script>
+				<script>
+					function myFunction3() {
+						document.getElementById("numin").value = +document.getElementById("numin").value + 1;
 					}
 				</script>
 				<!-- kiem tra va format date-->
