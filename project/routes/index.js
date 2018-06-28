@@ -1422,7 +1422,7 @@ router.post('/thanhtoan', function(req, res, next) {
                         for (var i = 0; i < req.session.cart.length; i++) {
                             var cartItem = req.session.cart[i];
                             //cap nhat lai chi tiet hoa don
-                            billInfoRepo.add(sdt, cartItem.ProId, cartItem.Quantity).then(value => {
+                            billInfoRepo.add(sdt, cartItem.ProId, cartItem.Quantity, ngayNhap1).then(value => {
 
                                            
                             }).catch(err => {
@@ -1503,6 +1503,7 @@ var offset = 0;
 /* GET history page. */
 router.get('/historydetail/:id', function(req, res, next) {
   var id = req.params.id;
+  var date = req.query.date;
 
   //
 var cate;
@@ -1522,7 +1523,7 @@ var dulieu1;
                 sale = { danhsachsv5 : rows5};
               
                    // var sdt = "0123456";
-                    billInfoRepo.loadAllsdt(id).then(rows4 => {
+                    billInfoRepo.loadAllsdt(id, date).then(rows4 => {
                       console.log("+==================billInfoRepo======================== id: " + id);
                           console.log(rows4);
                           dulieu1 = { danhsachsv1 : rows4};

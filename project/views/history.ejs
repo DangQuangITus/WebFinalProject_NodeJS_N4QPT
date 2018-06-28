@@ -51,9 +51,21 @@
 				<div class="span8">
 					<div class="account pull-right">
 						<ul class="user-menu">				
-							<li><a href="#">Tài Khoản</a></li>
+							<% if(layoutVM.isLogged == true) { %>		
+						<!--	<li><a href="#">Tài Khoản</a></li> -->
 							<li><a href="../cart"> Giỏ hàng </a></li>
-							<li><a href="../checkout.html"> Thanh toán </a></li>					
+							<li><a href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
+
+						
+									<% if(layoutVM.curUser.f_Permission == 1) { %>		
+									
+										<li><a href="../index1.html"> Admin </a></li>
+									
+										<%
+										}%>		
+							<%
+							}%>		
+														
 							<li><a href="../register.html"> Đăng nhập </a></li>	
 							<% if(layoutVM.isLogged == true) { %>
 								<!-- <li><a href="register.html"><%= layoutVM.curUser.f_Username %></a></li> -->
@@ -62,13 +74,13 @@
 									<span class="caret"></span></button>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
 									<li><a role="menuitem" tabindex="-1" href="../customer.html">Chỉnh sửa thông tin</a></li>
-									<li><a role="menuitem" tabindex="-1" href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
-									<li><a role="menuitem" tabindex="-1" href="../logout.html">Thoát</a></li>
+						<!--			<li><a role="menuitem" tabindex="-1" href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li> -->
+									<li><a role="menuitem" tabindex="-1" href="../logout1.html">Thoát</a></li>
 									
 									</ul>
 								</span>
 							<%
-							}%>			
+							}%>				
 						</ul>
 					</div>
 				</div>
@@ -166,12 +178,13 @@
 											var thang="";
 											thang = month;
 											var ngayNhap = date.getDate().toString()+"/" + thang +"/"+ date.getFullYear().toString() ; 
+                                            var ngayNhap1 =  date.getFullYear().toString()+ "-"+ thang + "-" +date.getDate().toString(); ;
 							%>
 							<td><%= ngayNhap %></td>
 							<td><%= motphantu.Status %></td>
 						  <td style="text-align: center;">
 							<span >
-								<a class="agile-icon" href="/historydetail/<%= motphantu.SDT %>" ><i class="fa fa-pencil-square-o"></i></a>
+								<a class="agile-icon" href="/historydetail/<%= motphantu.SDT %>?date=<%= ngayNhap1 %>" ><i class="fa fa-pencil-square-o"></i></a>
 							</span> 
 							
 							</td>
