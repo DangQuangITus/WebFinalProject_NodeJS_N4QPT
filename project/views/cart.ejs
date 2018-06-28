@@ -117,10 +117,6 @@
 					<div class="span9">
 						<div class="row">
 							
-
-							
-							
-							
 						</div>
 						<div class="row">
 							<div class="span9">
@@ -176,31 +172,44 @@
 								</tr>		  
 							</tbody>
 						</table>
-					<!--	<h4> Bạn muốn làm gì tiếp theo? </h4>
-						<p>Chọn 1 đáp án nếu bạn có mã giảm giá hoặc điểm thưởng mà bạn muốn sử dụng hoặc ước tính chi phí vận chuyển của bạn</p>
-						<label class="radio">
-							<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-							Sử dụng mã giảm giá
-						</label>
-						<label class="radio">
-							<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-							Ước lượng chi phí mua hàng &amp; cả thuế
-						</label>
-						<hr>
-						<p class="cart-total right">
-							<strong>Tiền Hàng</strong>:	93.789.000đ<br>
-							<strong>Thuế môi trường (-50.000)</strong>: 50.000đ<br>
-							<strong>Thuế GTGT (9.0%)</strong>: 8.441.010đ<br>
-							<strong> Tổng </strong>: 102.280.010đ<br>
-						</p>
-						<button class="btn" type="button"> Cập Nhật </button>
-							<button class="btn" type="button"> Tiếp Tục </button> -->
+						<h4> Thanh toán </h4>
+
 						<hr/>
-						<p class="buttons center">				
-							
-							<button class="btn btn-inverse" type="submit" id="checkout" onclick="myFunction()">Thanh Toán</button>
-						</p>	
-								</div>							
+										
+							 
+								</div>
+										<form action="/donhang.html  %>" method="post">
+										
+									<div class="form-group">
+										<label for="ten">Tên khách hàng:</label>
+										<input type="text" class="form-control" id="ten" name="ten" disabled value="<%= layoutVM.curUser.f_Username %>">
+									</div>
+									<div class="form-group">
+											<label for="diaChi">Địa chỉ khách hàng:</label>
+											<textarea class="form-control" rows="5" cols="3000" id="diaChi" name="diaChi" ></textarea>
+										</div>
+									
+									
+									
+									
+									<div class="form-group">
+										<label for="sdt">Số điện thoại:</label>
+										<input type="textarea" class="form-control" id="sdt" name="sdt">
+									</div>
+					
+									<div class="form-group">
+											<label for="txtDOB">Ngày thanh toán</label>
+											
+													<input type="text" class="form-control" id="txtDOB" placeholder="dd/mm/yyyy" name="dob">
+											
+									</div>
+               			
+									<div class="form-group">
+										<label for="status">Tình trạng:</label>
+										<input type="text" class="form-control" id="status" name="status" disabled value="Chưa giao">
+									</div>
+									<button type="submit" class="btn btn-success">Thanh toán</button>
+							</form>							
 							</div>		
 
 						
@@ -320,5 +329,16 @@
 			document.getElementById("total").value = document.getElementById("txtq").value + 1;
 		}
 		</script>
+		<!-- kiem tra va format date-->
+<script src="/javascripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script type="text/javascript">
+		$('#txtDOB').datepicker({
+			format: 'd/m/yyyy',
+			autoclose: true
+		});
+
+	
+	</script>
+<!-- end-->
     </body>
 </html>

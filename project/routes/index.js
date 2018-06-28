@@ -1379,4 +1379,22 @@ router.post('/cart/remove', (req, res) => {
 });
 
 
+router.post('/thanhtoan', function(req, res, next) {
+  var diaChi = req.body.diaChi;
+  var ten = req.body.ten;
+  var sdt = req.body.sdt;
+  var dob = moment(req.body.dob, 'D/M/YYYY')
+        .format('YYYY-MM-DD');
+    console.log(" ** *** ngay nhap: " + dob);
+    var ngayNhap = dob;
+ // var ngayNhap = req.body.ngayNhap;
+  var status = req.body.status;
+  billRepo.add(ten, diaChi, sdt, ngayNhap, status).then(value => {
+    res.redirect('/cart');
+
+  }).catch(err => {
+      res.end('fail');
+  });
+ 
+});
 module.exports = router;
