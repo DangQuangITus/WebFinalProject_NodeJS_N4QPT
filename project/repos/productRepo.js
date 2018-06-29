@@ -85,3 +85,9 @@ exports.update = (ten, mota, CatID, nsxID, gia, xuatxu, ngayNhap, NumSale, NumWa
 
     return db.save(sql);
 }
+
+exports.updatethanhtoan = (NumSale, stock, id) => {
+    var sql = "UPDATE `product` SET  `NumSale`='"+NumSale+"', `NumStock`='"+stock+"' WHERE `ProID`='"+id+"'";
+
+    return db.save(sql);
+}
