@@ -30,9 +30,9 @@ var handleLayoutMDW = require('./middle-wares/handleLayout'),
 
 var sessionStore = new MySQLStore({
   host: 'localhost',
-  port: 33060,
+  port: 3306,
   user: 'root',
-  password: 'vertrigo',
+  password: '1234',
   database: 'qlbh',
   createDatabaseTable: true,
   schema: {

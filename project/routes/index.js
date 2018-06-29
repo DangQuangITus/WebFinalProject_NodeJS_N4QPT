@@ -1685,54 +1685,114 @@ router.post('/thanhtoan', function(req, res, next) {
   var ten = req.body.ten;
   var sdt = req.body.sdt;
   var dob = moment(req.body.dob, 'D/M/YYYY')
-  .format('YYYY-MM-DD');
-  console.log(" * ** ngay nhap: " + dob);
-  var ngayNhap1 = dob;
-  var status = "Chưa giao";
-  var l = 0;
+        .format('YYYY-MM-DD');
+    console.log(" ** *** ngay nhap: " + dob);
+    var ngayNhap1 = dob;
+ // var ngayNhap = req.body.ngayNhap;
+ // var status = req.body.status;
+ var status = "Chưa giao";
+ var l = 0;
  //tang sl ban
  //req.session.sl = [];
- billRepo.add(ten, diaChi, sdt, ngayNhap1, status).then(value => {
-  console.log("======================req.session.cart===========================");
-  console.log(req.session.cart);
-  console.log("=================================================");
-  var sl = 0;
-  
-  for (var i = 0; i < req.session.cart.length; i++) {
-    var cartItem = req.session.cart[i];
-    sl = cartItem.Quantity;
-    console.log("so luong " + sl);
-    billInfoRepo.add(sdt, cartItem.ProId, cartItem.Quantity, ngayNhap1).then(value => {
+  billRepo.add(ten, diaChi, sdt, ngayNhap1, status).then(value => {
+                        console.log("======================req.session.cart===========================");
+                        console.log(req.session.cart);
+                        console.log("=================================================");
+                        var sl = 0;
+                        
+                        for (var i = 0; i < req.session.cart.length; i++) {
+                            var cartItem = req.session.cart[i];
+                            sl = cartItem.Quantity;
+                            console.log("so luong " + sl);
+                            //req.session.sl.push(sl);
+                            //cap nhat lai chi tiet hoa don
+                            billInfoRepo.add(sdt, cartItem.ProId, cartItem.Quantity, ngayNhap1).then(value => {
 
-     
-    }).catch(err => {
-      res.end('fail');
-    });
-    
-    productRepo.single(cartItem.ProId).then(c => {
-      
-      console.log("======================c===========================");
-      console.log(c);
-      var soLuong = c.NumSale + cartItem.Quantity;
-      var kho = c.NumStock -  cartItem.Quantity;
-      console.log("======================cartItem.Quantity===========================");
-      console.log(cartItem.Quantity);
-      productRepo.updatethanhtoan(soLuong, kho, c.ProId).then(value => {
-       
-      }).catch(err => {
-       res.end('fail');
-     });
-    });  
-    
-  }
+                             
+                            }).catch(err => {
+                              res.end('fail');
+                          });
+                          
+                        //  var p = [];
+                          productRepo.single(cartItem.ProId).then(c => {
+                            
+                                      console.log("======================c===========================");
+                                      console.log(c);
+                                      var soLuong = c.NumSale + cartItem.Quantity;
+                                      var kho = c.NumStock -  cartItem.Quantity;
+                                      console.log("======================cartItem.Quantity===========================");
+                                      console.log(cartItem.Quantity);
+                                      productRepo.updatethanhtoan(soLuong, kho, c.ProId).then(value => {
+                                 
+                                               }).catch(err => {
+                                                 res.end('fail');
+                                             });
+                          });  
+              
+                                      
+                  //         productRepo.single(cartItem.ProId).then(c => {
+                            
+                  //           console.log("======================c===========================");
+                  //           console.log(c);  
+                  //           console.log("======================Quantity===========================");
+                  //           console.log(cartItem.Quantity);
+                  //          console.log("======================sdt ===========================");
+                  //           console.log(sdt);
+                  //           console.log("======================ngay ===========================");
+                  //           console.log(dob);
+                  //           console.log("======================id ===========================");
+                  //           console.log(c.ProID);
+                  //           // console.log("======================i===========================");
+                  //           // console.log(i);
+                  //           // console.log("======================req.ss===========================");
+                  //           // console.log(req.session.sl[i]);
+                           
+                  //         //   billInfoRepo.single(sdt, dob, c.ProID).then(bill => {
+                  //         //     console.log("======================bill ===========================");
+                  //         //   // console.log(bill.num);
+                  //         //   // billInfoRepo.single1(bill.id).then(o =>{
+                  //         //   //   l = o.num;
+                  //         //   // });
+                  //         //     req.session.num = bill.num;
+                            
+                  //         // });
+                  //         // 
+                  //         // productRepo.single(cartItem.ProId).then(c1 => {
+                  //         //   console.log("======================c1 ===========================");
+                  //         //   console.log(c1);
+                  //            // console.log("so luong b.num" + b.num);
+                  //           var soLuong = c.NumSale + cartItem.Quantity;
+                  //           var kho = c.NumStock -  cartItem.Quantity;
+                  //            console.log(c.NumStock + " con lai kho ==========" + kho+" = proname== " + c.ProName);
+                  //            console.log("soluong: " + soLuong + "====nsx : " + c.nsxID + " ==== loai: " + c.CatID +" = proname== " + c.ProName+" = prodec== " + c.ProDec+" = proprice== " + c.ProPrice+" = addr== " + c.ProAddr+" = datein== " + c.ProDateIn +" = númale== " +  c.NumSale+" = cpu== " + c.CPU+" = ram== " +  c.RAM+" = weight == " +  c.Weight+" = HardDisk== " +  c.HardDisk+" = id== " +  c.ProID);
+                  //            //ngay
+                  //            var str = c.ProDateIn;
+                  //            var temp = str.toString().slice(4, 15);
+                  //            var date = new Date(temp);
+                  //          //	console.log("===ngay nhap sua3===" + date);
+                  //              var month = date.getMonth()+1;
+                  //              var thang="";
+                  //              thang = month;
+                  //              var ngayNhap = date.getFullYear().toString()+ "-"+ thang + "-" +date.getDate().toString(); 
+                  //              console.log(ngayNhap);
+                  //                productRepo.update(c.ProName, c.ProDec, c.CatID, c.nsxID, c.ProPrice, c.ProAddr, ngayNhap, soLuong, c.NumWatch, c.CPU, c.RAM, c.Weight, c.HardDisk, kho, c.ProID).then(value => {
+                                 
+                  //                    }).catch(err => {
+                  //                      res.end('fail');
+                  //                  });
+                  //               //  });
+                  //  //
+                  //         }); 
+                        }
       //update cart
       req.session.cart = [];   
       res.redirect('/cart');
-    }).catch(err => {
+  }).catch(err => {
       res.end('fail');
-    });
-    
   });
+ 
+});
+
 
 /* GET history page. */
 router.get('/history/:id', function(req, res, next) {
