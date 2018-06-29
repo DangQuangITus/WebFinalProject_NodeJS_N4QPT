@@ -11,6 +11,39 @@ exports.loadAllTopDate = () => {
     return db.load(sql);
 }
 
+
+exports.loadAllFullFilter = function(start, end, CateID, nsxID){
+    return new Promise((resolve, reject) => {
+
+        var sql;
+        if(CateID === '0' && nsxID != '0'){
+            var sql = ("select * FROM qlbh.product where product.ProPrice > " +start + " and product.ProPrice < " + end + 
+                " and product.nsxID = " + nsxID + ";");
+        }
+        else if(CateID === '0' && nsxID === '0'){
+         var sql = ("select * FROM qlbh.product where product.ProPrice > " +start + " and product.ProPrice < " + end + ";");   
+     }
+     else if(CateID != '0' && nsxID === '0'){
+         var sql = ("select * FROM qlbh.product where product.ProPrice > " +start + " and product.ProPrice < " + end + 
+            " and product.CatID = " + CateID +";"); 
+     }
+     else if(CateID != '0' && nsxID != '0'){
+        var sql = ("select * FROM qlbh.product where product.ProPrice > " +start + " and product.ProPrice < " + end + 
+            " and product.nsxID = " + nsxID + " and product.CatID = " + CateID +";");
+    }
+    console.log(sql);
+    db.load(sql).then(rows => {
+        if (rows.length === 0) {
+            resolve(null);
+        } else {
+            resolve(rows);
+        }
+    }).catch(err => {
+        reject(err);
+    });
+});
+}
+
 //lay top 10 sp xem nhieu nhat
 exports.loadAllTopWatch = () => {
     var sql = 'SELECT * FROM qlbh.product order by NumWatch desc limit 12;';
@@ -25,7 +58,12 @@ exports.loadAllTopSale = () => {
 
 //lay top 6 sp cùng nsx
 exports.loadAllnsx = (nsxID, num, offset) => {
-    var sql = "SELECT * FROM qlbh.product where nsxID = '"+ nsxID+"' limit "+num+" offset "+offset+";";
+    if(nsxID === '0'){
+        var sql = "SELECT * FROM qlbh.product limit "+num+" offset "+offset+";";    
+    }
+    else{
+        var sql = "SELECT * FROM qlbh.product where nsxID = '"+ nsxID+"' limit "+num+" offset "+offset+";";
+    }
     return db.load(sql);
 }
 
@@ -43,8 +81,12 @@ exports.countByCat = catId => {
 
 //dem so luong san pham theo nsx
 exports.countByNsx = nsxID => {
-	var sql = `select count(*) as total from product where nsxID = ${nsxID}`;
-    return db.load(sql);
+    if(nsxID === '0'){
+        var sql = `select count(*) as total from product`;    
+    }else{
+       var sql = `select count(*) as total from product where nsxID = ${nsxID}`;
+   }
+   return db.load(sql);
 }
 
 exports.single = (id) => {

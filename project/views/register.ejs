@@ -49,36 +49,36 @@
 					<div class="account pull-right">
 						<ul class="user-menu">				
 							<% if(layoutVM.isLogged == true) { %>		
-						<!--	<li><a href="#">Tài Khoản</a></li> -->
-							<li><a href="cart"> Giỏ hàng </a></li>
-							<li><a href="history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
+							<!--	<li><a href="#">Tài Khoản</a></li> -->
+							<li><a href="../cart"> Giỏ hàng </a></li>
+							<li><a href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
 
-						
-									<% if(layoutVM.curUser.f_Permission == 1) { %>		
-									
-										<li><a href="index1.html"> Admin </a></li>
-									
-										<%
-										}%>		
+							<% if(layoutVM.curUser.f_Permission == 1) { %>		
+
+							<li><a href="../index1.html"> Admin </a></li>
+
 							<%
-							}%>		
-														
-							<li><a href="register.html"> Đăng nhập </a></li>	
-							<% if(layoutVM.isLogged == true) { %>
-								<!-- <li><a href="register.html"><%= layoutVM.curUser.f_Username %></a></li> -->
-								<span class="dropdown">
-									<button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><%= layoutVM.curUser.f_Username %>
-									<span class="caret"></span></button>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-									<li><a role="menuitem" tabindex="-1" href="customer.html">Chỉnh sửa thông tin</a></li>
-						<!--			<li><a role="menuitem" tabindex="-1" href="history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li> -->
-									<li><a role="menuitem" tabindex="-1" href="logout.html">Thoát</a></li>
-									
-									</ul>
-								</span>
-							<%
-							}%>			
-						</ul>
+						}%>		
+						<%
+					}else{%>
+					<li><a href="../register.html">Đăng nhập</a></li>		
+					<%}%>		
+					<% if(layoutVM.isLogged == true) { %>
+					<!-- <li><a href="register.html"><%= layoutVM.curUser.f_Username %></a></li> -->
+					<span class="dropdown">
+						<button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><%= layoutVM.curUser.f_Username %>
+							<span class="caret"></span></button>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+								<li><a role="menuitem" tabindex="-1" href="../customer.html">Chỉnh sửa thông tin</a></li>
+								<li><a href="../history/<%= layoutVM.curUser.f_sdt %>">Xem lịch sử mua hàng</a></li>
+								<li><a href="../cart"> Giỏ hàng </a></li>
+								<li><a role="menuitem" tabindex="-1" href="../logout.html">Thoát</a></li>
+
+							</ul>
+						</span>
+						<%
+					}%>			
+				</ul>
 					</div>
 				</div>
 			</div>
@@ -91,23 +91,22 @@
 						<ul>
 							<li><a href="./products.html">Hãng sản xuất</a>					
 								<ul>
-									<li><a href="./products.html">Apple</a></li>									
-									<li><a href="./products.html">Dell</a></li>
-									<li><a href="./products.html">Asus</a></li>	
-									<li><a href="./products.html">HP</a></li>									
-									<li><a href="./products.html">Acer</a></li>
-									<li><a href="./products.html">Lenovo</a></li>									
+									
+									<% danhsach4.danhsachsv4.forEach(function (motphantu){		%>
+									
+									<li><a href="../products.nsx/<%= motphantu.nsxID %>"><%= motphantu.nsxName %></a></li>
+									<% }) %>								
 								</ul>
 							</li>															
-	
+
 							<li><a href="./products.html">Loại sản phẩm</a>
 								<ul>									
-									<li><a href="./products.html">Chơi game</a></li>
-									<li><a href="./products.html">Học tập-văn phòng</a></li>
-									<li><a href="./products.html">Đồ họa-kỹ thuật</a></li>
-									<li><a href="./products.html">Cao cấp sang trọng</a></li>
+									<% danhsach3.danhsachsv3.forEach(function (motphantu){		%>
+									
+									<li><a href="../products.cate/<%= motphantu.CatID %>"><%= motphantu.CatName %></a></li>
+									<% }) %>
 								</ul>
-							</li>			
+							</li>					
 							<!-- <li><a href="./products.html">Man</a></li>						
 							<li><a href="./products.html">Hangbag</a></li> -->
 							<li><a href="./products.html">Bán chạy nhất</a></li>
@@ -199,37 +198,7 @@
 					</div>
 					<div class="span7">					
 						<h4 class="title"><span class="text"><strong>Register</strong> Form</span></h4>
-		<!--				<form action="index.html" method="post" class="form-stacked">
-							<fieldset>
-								<div class="control-group">
-									<label class="control-label">Username</label>
-									<div class="controls">
-										<input type="text" placeholder="Enter your username" class="input-xlarge"
-										id="username1" name="username" required>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">Email address:</label>
-									<div class="controls">
-										<input type="text" placeholder="Enter your email" class="input-xlarge" id="email1" name="email" required>
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">Password:</label>
-									<div class="controls">
-										<input type="password" placeholder="Enter your password" class="input-xlarge" id="password1" name="password" required>
-									</div>
-								</div>							                            
-								<div class="control-group">
-									<p>Now that we know who you are. I'm not a mistake! In a comic, you know how you can tell who the arch-villain's going to be?</p>
-								</div>
-								<hr>
-								<div class="g-recaptcha" data-sitekey="6LfExFUUAAAAAD2ouMMgpoIrl6tZED6yKcqrpa1i"></div>
-								<div class="actions"><input tabindex="9" class="btn btn-primary large" id="submit1" onclick="validate1()" type="submit" value="Create your account"></div>
-
-							</fieldset>
-							
-						</form>	 -->
+		
 						<!-- start -->		
 
 						<form action="/register.html" method="POST" class="form-horizontal" role="form" onsubmit="return validate();">
@@ -304,19 +273,19 @@
 					<div class="span3">
 						<h4>Điều Hướng</h4>
 						<ul class="nav">
-							<li><a href="./index.html">Trang chủ</a></li>  
-							<li><a href="./about.html">Thông tin</a></li>
+							<li><a href="../index.html">Trang chủ</a></li>  
+							<li><a href="../about.html">Thông tin</a></li>
 							<li><a href="./contact.html">Liên hệ</a></li>
-							<li><a href="./cart">Giỏ hàng</a></li>
-							<li><a href="./register.html">Đăng nhập</a></li>							
+							<!-- <li><a href="./cart">Giỏ hàng</a></li> -->
+							<li><a href="../register.html">Đăng nhập</a></li>							
 						</ul>					
 					</div>
 					<div class="span4">
 						<h4>My Account</h4>
-						<ul class="nav">
+						<ul class="nav"><!-- 
 							<li><a href="#">Tài khoản của tôi</a></li>
 							<li><a href="#">Lịch sử đặt hàng</a></li>
-							<li><a href="#">Danh sách yêu thích</a></li>
+							<li><a href="#">Danh sách yêu thích</a></li> -->
 							<!-- <li><a href="#">Làm mới</a></li> -->
 						</ul>
 					</div>
