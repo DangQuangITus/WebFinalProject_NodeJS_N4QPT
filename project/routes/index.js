@@ -1456,8 +1456,9 @@ router.post('/thanhtoan', function(req, res, next) {
                     //
                            });
                         }
-    //res.redirect('/cart');
-    res.redirect('/cart');
+      //update cart
+      req.session.cart = [];   
+      res.redirect('/cart');
   }).catch(err => {
       res.end('fail');
   });
@@ -1487,7 +1488,7 @@ var offset = 0;
                     billRepo.loadAllsdt(sdt).then(rows => {
                          // console.log(rows);
                           var dulieu = { danhsachsv : rows};
-                         
+                          
                          
                         res.render('history', { danhsach: dulieu, danhsach1: cate, danhsach2: nsx,  danhsach5: sale});
 
